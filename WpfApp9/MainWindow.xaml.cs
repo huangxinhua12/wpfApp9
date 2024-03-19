@@ -21,6 +21,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using WpfApp9;
+using WpfApp9.BaseData;
 using WpfApp9.DataBase;
 using Path = System.IO.Path;
 
@@ -76,6 +77,7 @@ namespace WpfApp9
                 string selectedFilePath = openFileDialog.FileName;
                 double buildingHeight = 0; // 从UI获取或硬编码  
                 double floorHeight = 0; // 从UI获取或硬编码  
+                string uuid = GuidGenerator.GenerateUuid().ToString();
 
                 try
                 {
@@ -114,11 +116,8 @@ namespace WpfApp9
                                 if (result.Code == 200) // 假设 200 表示成功  
                                 {  
                                     MySqlUtil mySql = new MySqlUtil();
-                                    string res=mySql.Resolver2();
+                                    string res=mySql.Resolver2(uuid);
                                     MessageBox.Show($"操作成功: {res}");  
-
-                                   
-                                    
                                     // 处理 Data 属性，可能需要进一步解析或转换为具体类型  
                                 }  
                                 else  

@@ -1,14 +1,30 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using WpfApp9.BaseData;
+using WpfApp9.DataBase;
 
 namespace WpfApp9
 {
     public class YourViewModel : INotifyPropertyChanged
     {
         // 定义一个可观察集合来存储字符串列表  
-        public ObservableCollection<string> YourList { get; private set; }
+        public ObservableCollection<string> YourList
+        {
+            get { return _YourList; }
+            set
+            {
+               
+                if (_YourList != value)
+                {
+                    _YourList = value;
+                    OnPropertyChanged();  
+                }
+            }
+        }
+
+        public ObservableCollection<string> _YourList { get; set; }
 
         public ObservableCollection<string> YourList2 { get; private set; }
 
@@ -75,37 +91,16 @@ namespace WpfApp9
             };
             YourList2 = new ObservableCollection<string> { };
             // 初始化 YourList 并添加一些示例数据  
-            YourList = new ObservableCollection<string>
-            {
-                "第一行文本",
-                "第二行文本",
-                "第三行文本",
-                "第一行文本",
-                "第二行文本",
-                "第三行文本",
-                "第一行文本",
-                "第二行文本",
-                "第三行文本",
-                "第一行文本",
-                "第二行文本",
-                "第三行文本",
-                "第一行文本",
-                "第二行文本",
-                "第三行文本",
-                "第一行文本",
-                "第二行文本",
-                "第三行文本",
-                "第一行文本",
-                "第二行文本",
-                "第三行文本",
-                // ... 添加更多行 ...  
-            };
+            List<string> names = new MySqlUtil().GetNamesFromDrawingInformation();
+            _YourList = new ObservableCollection<string>(names);
+           
         }
 
         // 调用此方法以通知属性更改  
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+  
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)  
+        {  
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));  
+        } 
     }
 }

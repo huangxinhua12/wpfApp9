@@ -11,7 +11,7 @@ namespace WpfApp9.DataBase
         public static string ConnectionString = "server=120.24.46.215;userid=admin;password=admin;database=revit2020";
         public static double feet = 0.3048;
 
-        public string Resolver2()
+        public string Resolver2(string uuid)
         {
             string xmlFilePath = @"C:\Users\lx\Desktop\1.xml"; // XML文件路径  
             XmlDocument xmlDoc = new XmlDocument();
@@ -19,11 +19,11 @@ namespace WpfApp9.DataBase
             XmlNodeList wallDataNodes = xmlDoc.SelectNodes("//WallData");
             XmlNode nameNodes = xmlDoc.SelectSingleNode("//FileName");
             string fileName = nameNodes?.Attributes?["value"].Value;
-            return executeData(wallDataNodes, fileName);
+            return executeData(wallDataNodes, fileName, uuid);
             // ... 其他处理逻辑 ...  
         }
 
-        public string Resolver(string xmlData)
+        public string Resolver(string xmlData, string uuid)
         {
             //假设 xmlData 是包含完整 XML 数据的字符串  
             XmlDocument xmlDoc = new XmlDocument();
@@ -31,11 +31,12 @@ namespace WpfApp9.DataBase
             XmlNodeList wallDataNodes = xmlDoc.SelectNodes("//WallData");
             XmlNode nameNode = xmlDoc.SelectSingleNode("//FileName"); // 注意这里应该是单数 Node，因为您只选择了一个节点  
             string fileName = nameNode?.Attributes?["value"]?.Value; // 使用空值传播运算符（?.）来避免空引用异常 
-            return executeData(wallDataNodes, fileName);
+            return executeData(wallDataNodes, fileName, uuid);
         }
 
-        public static string executeData(XmlNodeList wallDataNodes, string fileName)
+        public static string executeData(XmlNodeList wallDataNodes, string fileName, string uuid)
         {
+            string status = "1"; // 根据您的表结构，status 的默认值是 '1' 
             if (wallDataNodes == null) return "数据解析失败或数据为空";
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
@@ -51,19 +52,32 @@ namespace WpfApp9.DataBase
                         string width = node.Attributes?["Width"]?.Value;
                         // ... 获取其他属性  
                         command.CommandText =
-                            @"INSERT INTO revit2020.wall (start_point_x, start_point_y, end_point_x, end_point_y,wall.width,spare_field1 /*, 其他列名 */) 
-                            VALUES (@StartX, @StartY, @EndX, @EndY,@width,@fileName /*, 其他参数 */)";
+                            @"INSERT INTO revit2020.wall (start_point_x, start_point_y, end_point_x, end_point_y,wall.width,spare_field1,uuid /*, 其他列名 */) 
+                            VALUES (@StartX, @StartY, @EndX, @EndY,@width,@fileName,@uuid/*, 其他参数 */)";
                         command.Parameters.AddWithValue("@StartX", startX);
                         command.Parameters.AddWithValue("@StartY", startY);
                         command.Parameters.AddWithValue("@EndX", endX);
                         command.Parameters.AddWithValue("@EndY", endY);
                         command.Parameters.AddWithValue("@width", width);
                         command.Parameters.AddWithValue("@fileName", fileName);
-                        // ... 添加其他参数  
+                        command.Parameters.AddWithValue("@uuid", uuid);
 
                         command.ExecuteNonQuery();
-                        command.Parameters.Clear(); // 清除参数以便下次迭代使用相同的命令对象  
+                        // 清除参数以便下次迭代使用相同的命令对象  
+                        command.Parameters.Clear();
                     }
+
+                    // 插入到 drawing_information 表中的代码  
+                    command.CommandText =
+                        @"INSERT INTO drawing_information (name, uuid, status, created_at, updated_at)    VALUES (@Name, @Uuid, @Status, NOW(), NOW())"; // 使用 NOW() 函数来设置时间戳  
+                    command.Parameters.AddWithValue("@Name", fileName);
+                    command.Parameters.AddWithValue("@Uuid", uuid);
+                    command.Parameters.AddWithValue("@Status", status);
+                    // 注意：由于 created_at 和 updated_at 字段设置了默认值 CURRENT_TIMESTAMP，所以在这里不需要显式地插入它们。  
+                    // 如果您需要插入 spare_field1, spare_field2, spare_field3，请确保您从节点中获取了这些值，并像上面那样添加它们。
+                    command.ExecuteNonQuery();
+                    // 清除参数以便下次迭代使用相同的命令对象  
+                    command.Parameters.Clear();
                 }
             }
 
@@ -71,16 +85,47 @@ namespace WpfApp9.DataBase
             return "数据导入完成";
         }
 
+        public List<string> GetNamesFromDrawingInformation()
+        {
+            List<string> names = new List<string>();
+
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    string query = "SELECT `name` FROM `drawing_information`";
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                names.Add(reader.GetString("name")); // 或者使用列的索引：reader.GetString(0)  
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // 处理异常，比如记录日志或者通知用户  
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+            return names;
+        }
 
         public static void Main()
         {
+            string uuid = Guid.NewGuid().ToString();
             string xmlFilePath = @"C:\Users\lx\Desktop\1.xml"; // XML文件路径  
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(xmlFilePath); // 加载XML文件  
             XmlNodeList wallDataNodes = xmlDoc.SelectNodes("//WallData");
             XmlNode nameNodes = xmlDoc.SelectSingleNode("//FileName");
             string fileName = nameNodes?.Attributes?["value"].Value;
-            executeData(wallDataNodes, fileName);
+            executeData(wallDataNodes, fileName, uuid);
         }
 
 

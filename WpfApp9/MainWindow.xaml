@@ -21,9 +21,6 @@
     <Window.Resources>
         <Style x:Key="MaterialDesignFlatMidBgButton" TargetType="Button" />
     </Window.Resources>
-    <Window.DataContext>
-        <local:YourViewModel /> <!-- 替换为实际的命名空间 -->
-    </Window.DataContext>
     <Grid>
         <!-- 两行 -->
         <Grid.RowDefinitions>
@@ -93,7 +90,7 @@
                         </Border>
                         <Border Width="180" BorderBrush="DarkGray" BorderThickness="1,0,1,1">
                             <ScrollViewer VerticalScrollBarVisibility="Auto" Width="180" Height="320">
-                                <ListBox ItemsSource="{Binding YourList}" SelectionMode="Single">
+                                <ListBox ItemsSource="{Binding YourList, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding}" TextWrapping="Wrap" Margin="5,2,5,2" />
