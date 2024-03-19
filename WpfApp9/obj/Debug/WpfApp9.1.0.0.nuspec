@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>WpfApp9</id>
+    <version>1.0.0</version>
+    <authors>WpfApp9</authors>
+    <description>Package Description</description>
+    <dependencies>
+      <group targetFramework=".NETFramework4.7.1">
+        <dependency id="MaterialDesignThemes" version="4.1.0" exclude="Build,Analyzers" />
+        <dependency id="MySql.Data" version="8.3.0" exclude="Build,Analyzers" />
+        <dependency id="Newtonsoft.Json" version="13.0.3" exclude="Build,Analyzers" />
+        <dependency id="Prism.DryIoc" version="8.1.97" exclude="Build,Analyzers" />
+        <dependency id="System.Net.Http" version="4.3.4" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.IO" targetFramework=".NETFramework4.7.1" />
+      <frameworkAssembly assemblyName="System.Runtime" targetFramework=".NETFramework4.7.1" />
+      <frameworkAssembly assemblyName="System.Security.Cryptography.Algorithms" targetFramework=".NETFramework4.7.1" />
+      <frameworkAssembly assemblyName="System.Security.Cryptography.Encoding" targetFramework=".NETFramework4.7.1" />
+      <frameworkAssembly assemblyName="System.Security.Cryptography.Primitives" targetFramework=".NETFramework4.7.1" />
+      <frameworkAssembly assemblyName="System.Security.Cryptography.X509Certificates" targetFramework=".NETFramework4.7.1" />
+    </frameworkAssemblies>
+  </metadata>
+  <files>
+    <file src="C:\Users\lx\Desktop\cad\WpfApp9\WpfApp9\bin\Debug\net471\WpfApp9.dll" target="lib\net471\WpfApp9.dll" />
+  </files>
+</package>

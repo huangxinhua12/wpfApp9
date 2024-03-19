@@ -1,0 +1,296 @@
+﻿<Window x:Class="WpfApp9.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:prism="http://prismlibrary.com/"
+        xmlns:local="clr-namespace:WpfApp9"
+        mc:Ignorable="d"
+        Title="MainWindow" Width="1000" Height="618"
+        AllowsTransparency="True"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="微软雅黑"
+        TextElement.FontSize="13"
+        TextElement.FontWeight="Regular"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None">
+    <Window.Resources>
+        <Style x:Key="MaterialDesignFlatMidBgButton" TargetType="Button" />
+    </Window.Resources>
+    <Window.DataContext>
+        <local:YourViewModel /> <!-- 替换为实际的命名空间 -->
+    </Window.DataContext>
+    <Grid>
+        <!-- 两行 -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition />
+            <RowDefinition Height="15" />
+        </Grid.RowDefinitions>
+        <materialDesign:ColorZone x:Name="ColorZone"
+                                  materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                                  DockPanel.Dock="Top"
+                                  Mode="PrimaryMid"
+                                  Grid.Row="0" Background="DarkGray" CornerRadius="0,0,0,0" Padding="10">
+            <DockPanel LastChildFill="True">
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                    <Button
+                        x:Name="btnMin"
+                        Content="—"
+                        Width="25"
+                        Height="25"
+                        Margin="1"
+                        Style="{StaticResource MaterialDesignFlatMidBgButton}" />
+                    <Button
+                        x:Name="btnMax"
+                        Content="☐"
+                        Width="25"
+                        Height="25"
+                        Margin="1"
+                        Style="{StaticResource MaterialDesignFlatMidBgButton}" />
+                    <Button
+                        x:Name="btnClose"
+                        Width="25"
+                        Height="25"
+                        Content="✕"
+                        Margin="1"
+                        Style="{StaticResource MaterialDesignFlatMidBgButton}" />
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Left" Orientation="Vertical" VerticalAlignment="Center">
+                    <!-- 显示文本“一键翻模” -->
+                    <TextBlock Text="一键翻模" Foreground="Black" HorizontalAlignment="Left" FontSize="20" Margin="10" />
+                </StackPanel>
+            </DockPanel>
+        </materialDesign:ColorZone>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="30"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Background="DarkGray"></Grid>
+            <Grid Grid.Column="2" Background="DarkGray"></Grid>
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <!-- 指定列的颜色 -->
+                <Border Grid.Row="0" Grid.Column="0" BorderBrush="DarkGray" BorderThickness="1" Background="#DCDCDC">
+                    <StackPanel Orientation="Vertical">
+                        <Border>
+                            <TextBlock Text="图纸管理" Height="30"></TextBlock>
+                        </Border>
+                        <Border>
+                            <Button Width="180" Content="图纸导入" Height="40" Click="ImportButton_Click"
+                                    Margin="10,0,10,0">
+                            </Button>
+                        </Border>
+                        <Border Width="180" BorderBrush="DarkGray" BorderThickness="1,0,1,1">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" Width="180" Height="320">
+                                <ListBox ItemsSource="{Binding YourList}" SelectionMode="Single">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}" TextWrapping="Wrap" Margin="5,2,5,2" />
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </ScrollViewer>
+                        </Border>
+
+                        <Border VerticalAlignment="Center" Height="95" Width="180" BorderBrush="DarkGray"
+                                BorderThickness="1,0,1,1">
+                            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Margin="5">
+                                <Button
+                                    x:Name="bt1"
+                                    Width="30"
+                                    Height="30"
+                                    Content="🖊" Margin="6,0"
+                                    Style="{StaticResource MaterialDesignFlatMidBgButton}" />
+                                <Button
+                                    x:Name="bt2"
+                                    Width="30"
+                                    Height="30"
+                                    Content="Ⅲ" Margin="6"
+                                    Style="{StaticResource MaterialDesignFlatMidBgButton}" />
+                                <Button
+                                    x:Name="bt3"
+                                    Width="30"
+                                    Height="30"
+                                    Content="↑" Margin="6"
+                                    Style="{StaticResource MaterialDesignFlatMidBgButton}" />
+                                <Button
+                                    x:Name="bt4"
+                                    Width="30"
+                                    Height="30"
+                                    Content="↓" Margin="6"
+                                    Style="{StaticResource MaterialDesignFlatMidBgButton}" />
+                            </StackPanel>
+                        </Border>
+
+                        <Border Height="70">
+                            <StackPanel Orientation="Horizontal" Margin="10">
+                                <Border Width="100" Height="30">
+                                    <Button Content="预览" Margin="5,0,10,0" />
+                                </Border>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Row="0" Grid.Column="1" Margin="0" BorderBrush="DarkGray" BorderThickness="0,1,0,1"
+                        Background="#DCDCDC">
+                    <StackPanel Orientation="Vertical">
+                        <Border BorderBrush="#2F4F4F" BorderThickness="0,0,0,0" Margin="5" Width="700">
+                            <StackPanel Orientation="Horizontal" Margin="10">
+                                <TextBlock Text="预设方案 :" VerticalAlignment="Center" Margin="10,0,10,0" />
+                                <Border>
+                                    <ComboBox x:Name="myComboBox" Width="450" Margin="10,0,10,0" SelectedIndex="0"
+                                              ItemsSource="{Binding MyOptions}"
+                                              DisplayMemberPath="." />
+                                </Border>
+                                <Border>
+                                    <Button Margin="5,0,10,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="pack://application:,,,/WpfApp9;component/Resources/保存.png"
+                                                   Width="16" Height="16" Margin="0,0,0,0" VerticalAlignment="Center" />
+                                            <TextBlock Text="" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </Button>
+                                </Border>
+                                <Border>
+                                    <Button Margin="5,0,10,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="pack://application:,,,/WpfApp9;component/Resources/菜单.png"
+                                                   Width="16" Height="16" Margin="0,0,0,0" VerticalAlignment="Center" />
+                                            <TextBlock Text="" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </Button>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+                        <Border Width="700" Margin="5" BorderBrush="DarkGray" BorderThickness="1,1,1,1">
+                            <StackPanel Orientation="Horizontal" Margin="10">
+                                <TextBlock Text="图层校验-方案" VerticalAlignment="Center" Margin="10,0,10,0" Height="15"></TextBlock>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Width="700" BorderBrush="DarkGray" BorderThickness="1,1,1,1" Margin="5">
+                            <StackPanel Orientation="Vertical">
+                                <Border Width="700" Height="280" Background="White">
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                        <StackPanel Margin="10">
+                                            <!-- 新增的行，包含文字和输入框，靠左对齐 -->
+                                            <Grid Margin="0,0,0,10">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="层高 :" Margin="0,0,10,0"
+                                                           VerticalAlignment="Center" />
+                                                <TextBox Grid.Column="1" Text="5000" HorizontalAlignment="Left"
+                                                         VerticalAlignment="Center" Width="150" />
+                                                <TextBlock Grid.Column="2" Text="mm" Margin="10,0,0,0"
+                                                           VerticalAlignment="Center" />
+                                            </Grid>
+
+                                            <!-- 标题行 -->
+                                            <Grid Margin="0,0,0,10">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="40" />
+                                                    <ColumnDefinition Width="160" />
+                                                    <ColumnDefinition Width="220" />
+                                                    <ColumnDefinition Width="220" />
+                                                </Grid.ColumnDefinitions>
+                                                <Border Grid.Column="1">
+                                                    <TextBlock Text="图层" HorizontalAlignment="Center" />
+                                                </Border>
+                                                <Border Grid.Column="2">
+                                                    <TextBlock Text="预留图层" HorizontalAlignment="Center" />
+                                                </Border>
+                                                <Border Grid.Column="3">
+                                                    <TextBlock Text="饰面工程" HorizontalAlignment="Center" />
+                                                </Border>
+
+                                                <!-- 如果第四列也需要标题或输入框，可以在这里添加 -->
+                                            </Grid>
+
+                                            <!-- 数据行 -->
+                                            <ItemsControl ItemsSource="{Binding Rows}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="40" />
+                                                                <ColumnDefinition Width="160" />
+                                                                <ColumnDefinition Width="220" />
+                                                                <ColumnDefinition Width="220" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <Border Grid.Column="0" BorderBrush="Black"
+                                                                    BorderThickness="1">
+                                                                <TextBlock Text="{Binding Label1}"
+                                                                           HorizontalAlignment="Center"
+                                                                           VerticalAlignment="Center" Margin="4" />
+                                                            </Border>
+                                                            <Border Grid.Column="1" BorderBrush="Black"
+                                                                    BorderThickness="1">
+                                                                <TextBlock Text="{Binding Label2}"
+                                                                           HorizontalAlignment="Center"
+                                                                           VerticalAlignment="Center" Margin="4" />
+                                                            </Border>
+                                                            <Border Grid.Column="2" BorderBrush="Black"
+                                                                    BorderThickness="1">
+                                                                <ComboBox ItemsSource="{Binding DropDownOptions1}"
+                                                                          HorizontalAlignment="Stretch"
+                                                                          VerticalAlignment="Center" Margin="5" />
+                                                            </Border>
+                                                            <Border Grid.Column="3" BorderBrush="Black"
+                                                                    BorderThickness="1">
+                                                                <ComboBox ItemsSource="{Binding DropDownOptions2}"
+                                                                          HorizontalAlignment="Stretch"
+                                                                          VerticalAlignment="Center" Margin="5">
+                                                                    <ComboBox.ItemTemplate>
+                                                                        <DataTemplate>
+                                                                            <TextBlock Text="{Binding}" />
+                                                                        </DataTemplate>
+                                                                    </ComboBox.ItemTemplate>
+                                                                </ComboBox>
+                                                            </Border>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </ScrollViewer>
+                                </Border>
+
+
+                                <Border Width="700" Height="100" BorderBrush="DarkGray" BorderThickness="0,1,0,0">
+                                </Border>
+                                <Border Width="700" Height="50" BorderBrush="DarkGray" BorderThickness="0,1,0,0">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+                                        <Button Width="60" Content="生成" Margin="10,0,10,0" />
+                                        <Button x:Name="btnClose2" Width="60" Content="取消" Margin="10,0,10,0" />
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+
+
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Grid>
+        <Border Grid.Row="2" Background="DarkGray" CornerRadius="0,0,0,0"></Border>
+
+
+    </Grid>
+
+
+</Window>
