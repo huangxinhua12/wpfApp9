@@ -55,9 +55,6 @@ C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\Microsoft.Bcl.AsyncInte
 C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\Microsoft.Xaml.Behaviors.dll
 C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\MySql.Data.dll
 C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\Newtonsoft.Json.dll
-C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\Prism.dll
-C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\Prism.DryIoc.Wpf.dll
-C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\Prism.Wpf.dll
 C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\System.Buffers.dll
 C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\System.Configuration.ConfigurationManager.dll
 C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\System.Diagnostics.DiagnosticSource.dll
@@ -67,10 +64,13 @@ C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\System.Net.Http.dll
 C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\System.Numerics.Vectors.dll
 C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\System.Runtime.CompilerServices.Unsafe.dll
 C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\System.Threading.Tasks.Extensions.dll
+C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\System.ValueTuple.dll
+C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\Prism.dll
+C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\Prism.DryIoc.Wpf.dll
+C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\Prism.Wpf.dll
 C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\ZstdSharp.dll
 C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\obj\Debug\net471\WpfApp9.csproj.AssemblyReference.cache
 C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\obj\Debug\net471\MainWindow.g.cs
-C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\obj\Debug\net471\GeneratedInternalTypeHelper.g.cs
 C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\obj\Debug\net471\WpfApp9_MarkupCompile.cache
 C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\obj\Debug\net471\WpfApp9_MarkupCompile.lref
 C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\obj\Debug\net471\MainWindow.baml

@@ -9,8 +9,8 @@
       <PackageReference Include="MaterialDesignThemes" Version="4.1.0" />
       <PackageReference Include="MySql.Data" Version="8.3.0" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-      <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
       <PackageReference Include="System.Net.Http" Version="4.3.4" />
+      <PackageReference Include="Yumikou.Prism.DryIoc.Wpf" Version="8.2.2" />
     </ItemGroup>
 
     <ItemGroup>
@@ -37,10 +37,6 @@
         <Generator>PublicResXFileCodeGenerator</Generator>
         <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       </EmbeddedResource>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="EntityData\" />
     </ItemGroup>
 
 </Project>

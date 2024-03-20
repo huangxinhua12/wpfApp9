@@ -2,6 +2,10 @@
 /shelf/
 /workspace.xml
 # Rider 忽略的文件
+# 忽略 DLL 文件  
+*.dll
+# 忽略缓存文件  
+*.cache
 /modules.xml
 /contentModel.xml
 /.idea.WpfApp9.iml

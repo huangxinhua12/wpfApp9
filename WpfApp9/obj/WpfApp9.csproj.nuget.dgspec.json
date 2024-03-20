@@ -52,13 +52,13 @@
               "target": "Package",
               "version": "[13.0.3, )"
             },
-            "Prism.DryIoc": {
-              "target": "Package",
-              "version": "[8.1.97, )"
-            },
             "System.Net.Http": {
               "target": "Package",
               "version": "[4.3.4, )"
+            },
+            "Yumikou.Prism.DryIoc.Wpf": {
+              "target": "Package",
+              "version": "[8.2.2, )"
             }
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.416\\RuntimeIdentifierGraph.json"

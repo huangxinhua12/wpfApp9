@@ -82,7 +82,31 @@ namespace WpfApp9.DataBase
             }
 
             Console.WriteLine("数据导入完成");
-            return "数据导入完成";
+            return fileName;
+        }
+
+        public int DeleteRecordByName(string name)
+        {
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    string query = "DELETE FROM drawing_information WHERE name = @name";
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@name", name);
+                        return command.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Handle the exception as per your requirements.  
+                    Console.WriteLine("An error occurred: " + ex.Message);
+                }
+            }
+
+            return 0;
         }
 
         public List<string> GetNamesFromDrawingInformation()
@@ -159,11 +183,11 @@ namespace WpfApp9.DataBase
             return entityList;
         }
 
-        public List<WallData> GetWallDataList()
+        public List<WallData> GetWallDataList(string fileName)
         {
             string query = "SELECT * FROM revit2020.wall WHERE spare_field1 = @param";
             MySqlParameter parameter = new MySqlParameter("@param", MySqlDbType.VarChar)
-                { Value = "华润广州南沙交标全套97户型3" };
+                { Value = fileName };
             Func<DataRow, WallData> wallDataFactory = CreateWallDataFromRow; // 工厂方法作为委托传递  
             return GetDataListFromDatabase<WallData>(query, parameter, wallDataFactory);
         }

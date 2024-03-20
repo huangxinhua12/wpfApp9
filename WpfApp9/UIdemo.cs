@@ -3,6 +3,7 @@ using Autodesk.Revit.UI;
 using System;
 using System.Reflection;
 using System.Windows.Media.Imaging;
+using WpfApp9.DataBase;
 
 namespace WpfApp9
 {
@@ -11,7 +12,7 @@ namespace WpfApp9
     {
         public Result OnShutdown(UIControlledApplication application)
         {
-            throw new NotImplementedException();
+            return Result.Succeeded;
         }
         public Result OnStartup(UIControlledApplication application)
         {
@@ -28,8 +29,8 @@ namespace WpfApp9
             //将pushButton添加到面板中
             PushButton pushButton = rp.AddItem(pbd) as PushButton;
             //设置按钮图片
-            //string imgPath = @"D:\Down\应用市场.png";
-            string imgPath = @"pack://application:,,,/WpfApp9;component/Resources/客服插件.png";
+            string imgPath = @"D:\Down\应用市场.png";
+            //string imgPath = @"pack://application:,,,/WpfApp9;component/Resources/客服插件.png";
             if (pushButton != null)
             {
                 pushButton.LargeImage = new BitmapImage(new Uri(imgPath, UriKind.Absolute));

@@ -1,9 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using MySql.Data.MySqlClient;
 using WpfApp9;
+using WpfApp9.DataBase;
 using WpfApp9.Extension;
 
 namespace wpfApp9
@@ -13,10 +16,8 @@ namespace wpfApp9
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            Document doc = commandData.Application.ActiveUIDocument.Document;
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
-            // 如果一切正常，返回成功结果  
             return Result.Succeeded;
         }
     }

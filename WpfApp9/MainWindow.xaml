@@ -7,7 +7,7 @@
         xmlns:prism="http://prismlibrary.com/"
         xmlns:local="clr-namespace:WpfApp9"
         mc:Ignorable="d"
-        Title="MainWindow" Width="1000" Height="618"
+        Title="MainWindow" Width="1100" Height="618"
         AllowsTransparency="True"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="微软雅黑"
@@ -84,49 +84,37 @@
                             <TextBlock Text="图纸管理" Height="30"></TextBlock>
                         </Border>
                         <Border>
-                            <Button Width="180" Content="图纸导入" Height="40" Click="ImportButton_Click"
-                                    Margin="10,0,10,0">
+                            <Button Width="220" Content="图纸导入" Height="40" Click="ImportButton_Click"
+                                    Margin="1,0,1,0">
                             </Button>
                         </Border>
-                        <Border Width="180" BorderBrush="DarkGray" BorderThickness="1,0,1,1">
-                            <ScrollViewer VerticalScrollBarVisibility="Auto" Width="180" Height="320">
-                                <ListBox ItemsSource="{Binding YourList, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single">
+                        <Border Width="220" BorderBrush="DarkGray" BorderThickness="1,0,1,1">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" Width="220" Height="320">
+                                <ListBox x:Name="ListBoxYourList" ItemsSource="{Binding YourList, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding}" TextWrapping="Wrap" Margin="5,2,5,2" />
+                                            <TextBlock Text="{Binding}" TextWrapping="Wrap" Margin="2,2,0,2" />
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
                             </ScrollViewer>
                         </Border>
 
-                        <Border VerticalAlignment="Center" Height="95" Width="180" BorderBrush="DarkGray"
+                        <Border VerticalAlignment="Center" Height="95" Width="220" BorderBrush="DarkGray"
                                 BorderThickness="1,0,1,1">
                             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Margin="5">
                                 <Button
                                     x:Name="bt1"
                                     Width="30"
                                     Height="30"
-                                    Content="🖊" Margin="6,0"
+                                    Content="🖊" Margin="10,0"
                                     Style="{StaticResource MaterialDesignFlatMidBgButton}" />
-                                <Button
-                                    x:Name="bt2"
-                                    Width="30"
-                                    Height="30"
-                                    Content="Ⅲ" Margin="6"
-                                    Style="{StaticResource MaterialDesignFlatMidBgButton}" />
-                                <Button
-                                    x:Name="bt3"
-                                    Width="30"
-                                    Height="30"
-                                    Content="↑" Margin="6"
-                                    Style="{StaticResource MaterialDesignFlatMidBgButton}" />
-                                <Button
-                                    x:Name="bt4"
-                                    Width="30"
-                                    Height="30"
-                                    Content="↓" Margin="6"
-                                    Style="{StaticResource MaterialDesignFlatMidBgButton}" />
+                                <Button x:Name="bt2" Width="30" Height="30" Content="Ⅲ" Margin="10" Click="Bt2_Click"
+                                        Style="{StaticResource MaterialDesignFlatMidBgButton}" />
+                                <Button x:Name="bt3" Width="30" Height="30" Content="↑" Margin="10" Click="Bt3_Click"
+                                        Style="{StaticResource MaterialDesignFlatMidBgButton}" />
+                                <Button x:Name="bt4" Width="30" Height="30" Content="↓" Margin="10" Click="Bt4_Click"
+                                        Style="{StaticResource MaterialDesignFlatMidBgButton}" />
                             </StackPanel>
                         </Border>
 
@@ -154,7 +142,7 @@
                                 <Border>
                                     <Button Margin="5,0,10,0">
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="pack://application:,,,/WpfApp9;component/Resources/保存.png"
+                                            <Image Source="pack://application:,,,/WpfApp10;component/Resources/保存.png"
                                                    Width="16" Height="16" Margin="0,0,0,0" VerticalAlignment="Center" />
                                             <TextBlock Text="" VerticalAlignment="Center" />
                                         </StackPanel>
@@ -163,7 +151,7 @@
                                 <Border>
                                     <Button Margin="5,0,10,0">
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="pack://application:,,,/WpfApp9;component/Resources/菜单.png"
+                                            <Image Source="pack://application:,,,/WpfApp10;component/Resources/菜单.png"
                                                    Width="16" Height="16" Margin="0,0,0,0" VerticalAlignment="Center" />
                                             <TextBlock Text="" VerticalAlignment="Center" />
                                         </StackPanel>
@@ -272,7 +260,7 @@
                                 </Border>
                                 <Border Width="700" Height="50" BorderBrush="DarkGray" BorderThickness="0,1,0,0">
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-                                        <Button Width="60" Content="生成" Margin="10,0,10,0" />
+                                        <Button Width="60" Content="生成" Margin="10,0,10,0" Click="excuteWall"/>
                                         <Button x:Name="btnClose2" Width="60" Content="取消" Margin="10,0,10,0" />
                                     </StackPanel>
                                 </Border>
