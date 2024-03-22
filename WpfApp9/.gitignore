@@ -1,0 +1,26 @@
+# 默认忽略的文件  
+/shelf/  
+/workspace.xml  
+  
+# Rider 忽略的文件  
+# 忽略 DLL 文件  
+*.dll  
+# 忽略缓存文件  
+*.cache  
+/modules.xml  
+/contentModel.xml  
+  
+# 忽略 IntelliJ IDEA 生成的文件和文件夹  
+.idea/  
+*.iml  
+*.ipr  
+*.iws  
+  
+# 基于编辑器的 HTTP 客户端请求  
+/httpRequests/  
+  
+# Datasource local storage ignored files  
+/dataSources/  
+/dataSources.local.xml
+/obj/
+/bin/

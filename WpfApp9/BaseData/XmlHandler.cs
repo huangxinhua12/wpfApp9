@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows;
 using System.Xml;
 
 namespace WpfApp9.BaseData
@@ -102,7 +103,7 @@ namespace WpfApp9.BaseData
                 // 构造文件的完整路径（这里假设文件位于 "import" 文件夹下）  
                 string relativePath = $"import/{fileName}";
                 string fullPath = Path.Combine(Directory.GetCurrentDirectory(), relativePath);
-
+                MessageBox.Show("当前路径:" + fullPath);
                 // 确保文件存在  
                 if (!File.Exists(fullPath))
                 {
@@ -112,7 +113,6 @@ namespace WpfApp9.BaseData
                 // 创建 XmlDocument 对象并加载 XML 文件  
                 XmlDocument xmlDoc = new XmlDocument();
                 xmlDoc.Load(fullPath); // 使用 Load 方法直接加载文件  
-
                 return xmlDoc;
             }
             catch (Exception ex)
