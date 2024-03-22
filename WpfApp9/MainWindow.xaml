@@ -110,7 +110,7 @@
                             <ScrollViewer VerticalScrollBarVisibility="Auto" Width="220" Height="320">
                                 <ListBox x:Name="ListBoxYourList"
                                          ItemsSource="{Binding YourList, UpdateSourceTrigger=PropertyChanged}"
-                                         SelectionMode="Single">
+                                         SelectionMode="Single" MouseDoubleClick="ListBoxYourList_MouseDoubleClick">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding}" TextWrapping="Wrap" Margin="2,2,0,2" />

@@ -121,5 +121,27 @@ namespace WpfApp9.BaseData
                 throw new Exception($"An error occurred while reading the XML file {fileName}.", ex);
             }
         }
+
+        public int DeleteFile(string fileName)
+        {
+            // 指定要删除的文件路径  
+            string catalogue = "import";
+            string relative = fileName;
+            string fullPath = Path.Combine(Directory.GetCurrentDirectory(), catalogue, relative);
+            MessageBox.Show("当前路径:" + fullPath);
+            // 检查文件是否存在  
+            if (File.Exists(fullPath))
+            {
+                // 删除文件  
+                File.Delete(fullPath);
+                MessageBox.Show("文件已成功删除");
+                return 1;
+            }
+            else
+            {
+                MessageBox.Show("指定的文件不存在");
+                return 0;
+            }
+        }
     }
 }

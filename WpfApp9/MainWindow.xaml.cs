@@ -164,9 +164,10 @@ namespace WpfApp9
                     if (result == MessageBoxResult.Yes)
                     {
                         // 删除数据库中的记录  
-                        MySqlUtil mySql = new MySqlUtil();
+                        // MySqlUtil mySql = new MySqlUtil();
+                        XmlHandler xmlHandler = new XmlHandler();
                         // 后面改成逻辑删除  
-                        int tags = mySql.DeleteRecordByName(item);
+                        int tags = xmlHandler.DeleteFile(item);
                         if (tags > 0)
                         {
                             // 从视图模型中删除该项  
@@ -219,15 +220,23 @@ namespace WpfApp9
                 {
                     // 提取 name 属性  
                     _createWall._fileName = item; // 假设 YourListItemType 有一个名为 name 的属性 
-                    MessageBox.Show($"生成图纸: {_createWall._fileName}");
-                    _externalEvent.Raise();
+                    // 显示确认删除的窗口  
+                    MessageBoxResult result = MessageBox.Show($"您确定要生成: {item} 吗？", "确认生成", MessageBoxButton.YesNo,
+                        MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        _externalEvent.Raise();
+                    }
+                    else
+                    {
+                        // 用户取消删除，不执行任何操作  
+                    }
                 }
             }
             else
             {
                 MessageBox.Show("未选中图纸");
             }
-
         }
 
         private void Bt2_Click(object sender, RoutedEventArgs e)
@@ -278,6 +287,16 @@ namespace WpfApp9
         private void Bt5_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("预览窗口");
+        }
+
+        private void ListBoxYourList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            // 获取双击的 ListBoxItem  
+            var listBox = sender as ListBox;
+            if (listBox == null) return;
+            var selectedItem = listBox.SelectedItem;
+            if (selectedItem == null) return;
+            this.excuteWall(sender, e);
         }
     }
 }
