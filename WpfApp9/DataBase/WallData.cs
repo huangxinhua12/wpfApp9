@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Xml;
 
 namespace WpfApp9.DataBase
 {
@@ -26,7 +28,7 @@ namespace WpfApp9.DataBase
         }
 
         // 带参数的构造函数，用于初始化墙的起始点和结束点坐标  
-        public WallData(float startX, float startY, float endX, float endY,float width)
+        public WallData(float startX, float startY, float endX, float endY, float width)
         {
             StartPointX = startX;
             StartPointY = startY;
@@ -36,6 +38,37 @@ namespace WpfApp9.DataBase
             // 可以设置其他属性的默认值或执行其他初始化逻辑  
         }
 
-        // 根据需要，你可以添加验证逻辑、方法、事件等  
+        public List<WallData> ReadWallDataFromXml(XmlNodeList wallDataNodes)
+        {
+            var wallList = new List<WallData>();
+            try
+            {
+                if (wallDataNodes != null)
+                {
+                    foreach (XmlNode wallDataNode in wallDataNodes)
+                    {
+                        var wallData = new WallData
+                        {
+                            // 这里我们没有从 XML 中获取 Id，因此可能需要自己生成或提供  
+                            StartPointX = float.Parse(wallDataNode.Attributes["StartX"].Value),
+                            StartPointY = float.Parse(wallDataNode.Attributes["StartY"].Value),
+                            EndPointX = float.Parse(wallDataNode.Attributes["EndX"].Value),
+                            EndPointY = float.Parse(wallDataNode.Attributes["EndY"].Value),
+                            WallType = wallDataNode.Attributes["WallType"].Value,
+                            Width = float.Parse(wallDataNode.Attributes["Width"].Value)
+                        };
+
+                        wallList.Add(wallData);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // 处理异常  
+                Console.WriteLine("An error occurred while reading the XML data: " + ex.Message);
+            }
+
+            return wallList;
+        }
     }
 }

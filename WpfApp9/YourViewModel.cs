@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using WpfApp9.BaseData;
 using WpfApp9.DataBase;
@@ -92,7 +93,10 @@ namespace WpfApp9
             };
             YourList2 = new ObservableCollection<string> { };
             // 初始化 YourList 并添加一些示例数据  
-            List<string> names = new MySqlUtil().GetNamesFromDrawingInformation();
+            //List<string> names = new MySqlUtil().GetNamesFromDrawingInformation();;
+            XmlHandler xmlHandler = new XmlHandler();
+            string directory = Path.Combine(Directory.GetCurrentDirectory(),"import");
+            List<string> names = xmlHandler.GetNamesFromDrawingInformationByFile(directory);
             _yourList = new ObservableCollection<string>(names);
             YourList = _yourList;
         }

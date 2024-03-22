@@ -14,7 +14,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
 using System.IO;
 using System.Net.Http;
@@ -35,6 +34,7 @@ namespace WpfApp9
     public partial class MainWindow : Window
     {
         private YourViewModel _viewModel;
+
         //外部事件
         private ExternalEvent _externalEvent = null;
         private CreateWall _createWall = null;
@@ -120,8 +120,10 @@ namespace WpfApp9
                                 // 使用 result 对象中的属性  
                                 if (result.Code == 200) // 假设 200 表示成功  
                                 {
-                                    MySqlUtil mySql = new MySqlUtil();
-                                    string res = mySql.Resolver(result.Data.ToString(), uuid);
+                                    // MySqlUtil mySql = new MySqlUtil();
+                                    //string res = mySql.Resolver(result.Data.ToString(), uuid);
+                                    XmlHandler xmlHandler = new XmlHandler();
+                                    string res = xmlHandler.Resolve(result.Data.ToString());
                                     _viewModel.YourList.Add(res);
                                     MessageBox.Show($"操作成功: {res}");
                                     // 处理 Data 属性，可能需要进一步解析或转换为具体类型  
@@ -147,26 +149,35 @@ namespace WpfApp9
             }
         }
 
-        private void Bt2_Click(object sender, RoutedEventArgs e)
+        private void Bt1_Click(object sender, RoutedEventArgs e)
         {
             if (ListBoxYourList.SelectedIndex >= 0) // 确保有选中的项  
             {
                 // 获取选中的项  
                 var selectedItem = ListBoxYourList.SelectedItem;
-                // 假设你的数据项是某种类型，比如叫做 YourListItemType  
+                // 假设你的数据项是字符串类型  
                 if (selectedItem is string item)
                 {
-                    // 提取 name 属性  
-                    string name = item; // 假设 YourListItemType 有一个名为 name 的属性  
-                    MessageBox.Show($"删除图纸: {name}");
-                    // 删除数据库中的记录  
-                    MySqlUtil mySql = new MySqlUtil();
-                    //后面改成逻辑删除
-                    int tags = mySql.DeleteRecordByName(name);
-                    if (tags > 0)
+                    // 显示确认删除的窗口  
+                    MessageBoxResult result = MessageBox.Show($"您确定要删除图纸: {item} 吗？", "确认删除", MessageBoxButton.YesNo,
+                        MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.Yes)
                     {
-                        // 从视图模型中删除该项  
-                        _viewModel.YourList.RemoveAt(ListBoxYourList.SelectedIndex);
+                        // 删除数据库中的记录  
+                        MySqlUtil mySql = new MySqlUtil();
+                        // 后面改成逻辑删除  
+                        int tags = mySql.DeleteRecordByName(item);
+                        if (tags > 0)
+                        {
+                            // 从视图模型中删除该项  
+                            _viewModel.YourList.RemoveAt(ListBoxYourList.SelectedIndex);
+                            // 同步更新ListBox的选中状态（如果需要）  
+                            ListBoxYourList.SelectedIndex = -1;
+                        }
+                    }
+                    else
+                    {
+                        // 用户取消删除，不执行任何操作  
                     }
                 }
             }
@@ -207,11 +218,66 @@ namespace WpfApp9
                 if (selectedItem is string item)
                 {
                     // 提取 name 属性  
-                    _createWall._fileName = item; // 假设 YourListItemType 有一个名为 name 的属性  
+                    _createWall._fileName = item; // 假设 YourListItemType 有一个名为 name 的属性 
+                    MessageBox.Show($"生成图纸: {_createWall._fileName}");
+                    _externalEvent.Raise();
                 }
             }
-            MessageBox.Show($"生成图纸: {_createWall._fileName}");
-            _externalEvent.Raise();
+            else
+            {
+                MessageBox.Show("未选中图纸");
+            }
+
+        }
+
+        private void Bt2_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("编辑按钮");
+        }
+
+        private void _DeleteBtn(object sender, RoutedEventArgs e)
+        {
+            if (myComboBox.SelectedIndex >= 0) // 确保有选中的项  
+            {
+                // 获取选中的项  
+                var selectedItem = myComboBox.SelectedItem;
+                // 假设你的数据项是字符串类型  
+                if (selectedItem is string item)
+                {
+                    // 显示确认删除的窗口  
+                    MessageBoxResult result = MessageBox.Show($"您确定要删除方案: {item} 吗？", "确认删除", MessageBoxButton.YesNo,
+                        MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        // 删除数据库中的记录  
+                        MessageBox.Show(" 删除数据库中的记录  ");
+                    }
+                    else
+                    {
+                        MessageBox.Show("用户取消删除，不执行任何操作  ");
+                        // 用户取消删除，不执行任何操作  
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("没有选中项  ");
+            }
+        }
+
+        private void _ImportBtn(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("");
+        }
+
+        private void _SaveBtn(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("");
+        }
+
+        private void Bt5_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("预览窗口");
         }
     }
 }

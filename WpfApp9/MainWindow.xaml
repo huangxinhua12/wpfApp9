@@ -20,6 +20,25 @@
         WindowStyle="None">
     <Window.Resources>
         <Style x:Key="MaterialDesignFlatMidBgButton" TargetType="Button" />
+        <Style x:Key="NoBorderButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Grid>
+                        <!-- 注意这里没有Border元素 -->
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!-- 添加图标资源，这里以位图为例 -->
+        <BitmapImage x:Key="DeleteBtn" UriSource="http://cdn.zlili.cn/root/%E5%88%A0%E9%99%A4.png" />
+        <BitmapImage x:Key="OtherIcon1" UriSource="http://cdn.zlili.cn/root/%E7%BC%96%E8%BE%91%20%281%29.png" />
+        <BitmapImage x:Key="UpArrowIcon" UriSource="http://cdn.zlili.cn/root/%E4%B8%8A%20%282%29.png" />
+        <BitmapImage x:Key="DownArrowIcon" UriSource="http://cdn.zlili.cn/root/%E4%B8%8B%20%282%29.png" />
+        <BitmapImage x:Key="ImportIcon" UriSource="http://cdn.zlili.cn/root/%E5%BC%80%E6%88%B7%E5%AF%BC%E5%85%A5.png" />
+        <BitmapImage x:Key="Save" UriSource="http://cdn.zlili.cn/root/%E4%BF%9D%E5%AD%98%20%282%29.png" />
     </Window.Resources>
     <Grid>
         <!-- 两行 -->
@@ -29,7 +48,6 @@
             <RowDefinition Height="15" />
         </Grid.RowDefinitions>
         <materialDesign:ColorZone x:Name="ColorZone"
-                                  materialDesign:ShadowAssist.ShadowDepth="Depth2"
                                   DockPanel.Dock="Top"
                                   Mode="PrimaryMid"
                                   Grid.Row="0" Background="DarkGray" CornerRadius="0,0,0,0" Padding="10">
@@ -90,7 +108,9 @@
                         </Border>
                         <Border Width="220" BorderBrush="DarkGray" BorderThickness="1,0,1,1">
                             <ScrollViewer VerticalScrollBarVisibility="Auto" Width="220" Height="320">
-                                <ListBox x:Name="ListBoxYourList" ItemsSource="{Binding YourList, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single">
+                                <ListBox x:Name="ListBoxYourList"
+                                         ItemsSource="{Binding YourList, UpdateSourceTrigger=PropertyChanged}"
+                                         SelectionMode="Single">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding}" TextWrapping="Wrap" Margin="2,2,0,2" />
@@ -103,25 +123,29 @@
                         <Border VerticalAlignment="Center" Height="95" Width="220" BorderBrush="DarkGray"
                                 BorderThickness="1,0,1,1">
                             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Margin="5">
-                                <Button
-                                    x:Name="bt1"
-                                    Width="30"
-                                    Height="30"
-                                    Content="🖊" Margin="10,0"
-                                    Style="{StaticResource MaterialDesignFlatMidBgButton}" />
-                                <Button x:Name="bt2" Width="30" Height="30" Content="Ⅲ" Margin="10" Click="Bt2_Click"
-                                        Style="{StaticResource MaterialDesignFlatMidBgButton}" />
-                                <Button x:Name="bt3" Width="30" Height="30" Content="↑" Margin="10" Click="Bt3_Click"
-                                        Style="{StaticResource MaterialDesignFlatMidBgButton}" />
-                                <Button x:Name="bt4" Width="30" Height="30" Content="↓" Margin="10" Click="Bt4_Click"
-                                        Style="{StaticResource MaterialDesignFlatMidBgButton}" />
+                                <Button x:Name="bt1" Margin="10,0" Click="Bt1_Click"
+                                        Style="{StaticResource NoBorderButtonStyle}">
+                                    <Image Source="{StaticResource DeleteBtn}" Width="32" Height="32" />
+                                </Button>
+                                <Button x:Name="bt2" Margin="10,0" Click="Bt2_Click"
+                                        Style="{StaticResource NoBorderButtonStyle}">
+                                    <Image Source="{StaticResource OtherIcon1}" Width="32" Height="32" />
+                                </Button>
+                                <Button x:Name="bt3" Margin="10,0" Click="Bt3_Click"
+                                        Style="{StaticResource NoBorderButtonStyle}">
+                                    <Image Source="{StaticResource UpArrowIcon}" Width="32" Height="32" />
+                                </Button>
+                                <Button x:Name="bt4" Margin="10,0" Click="Bt4_Click"
+                                        Style="{StaticResource NoBorderButtonStyle}">
+                                    <Image Source="{StaticResource DownArrowIcon}" Width="32" Height="32" />
+                                </Button>
                             </StackPanel>
                         </Border>
 
                         <Border Height="70">
                             <StackPanel Orientation="Horizontal" Margin="10">
                                 <Border Width="100" Height="30">
-                                    <Button Content="预览" Margin="5,0,10,0" />
+                                    <Button Content="预览" Margin="5,0,10,0" Click="Bt5_Click"/>
                                 </Border>
                             </StackPanel>
                         </Border>
@@ -136,24 +160,30 @@
                                 <TextBlock Text="预设方案 :" VerticalAlignment="Center" Margin="10,0,10,0" />
                                 <Border>
                                     <ComboBox x:Name="myComboBox" Width="450" Margin="10,0,10,0" SelectedIndex="0"
-                                              ItemsSource="{Binding MyOptions}"
+                                              Height="25" ItemsSource="{Binding MyOptions}"
                                               DisplayMemberPath="." />
                                 </Border>
                                 <Border>
-                                    <Button Margin="5,0,10,0">
+                                    <Button Margin="5,0,10,0" Click="_DeleteBtn" Style="{StaticResource NoBorderButtonStyle}">
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="pack://application:,,,/WpfApp10;component/Resources/保存.png"
-                                                   Width="16" Height="16" Margin="0,0,0,0" VerticalAlignment="Center" />
-                                            <TextBlock Text="" VerticalAlignment="Center" />
+                                            <Image Source="{StaticResource DeleteBtn}"
+                                                   Width="32" Height="32" Margin="0,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </Button>
                                 </Border>
                                 <Border>
-                                    <Button Margin="5,0,10,0">
+                                    <Button Margin="5,0,10,0" Click="_ImportBtn" Style="{StaticResource NoBorderButtonStyle}">
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="pack://application:,,,/WpfApp10;component/Resources/菜单.png"
-                                                   Width="16" Height="16" Margin="0,0,0,0" VerticalAlignment="Center" />
-                                            <TextBlock Text="" VerticalAlignment="Center" />
+                                            <Image Source="{StaticResource ImportIcon}"
+                                                   Width="32" Height="32" Margin="0,0,0,0" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </Button>
+                                </Border>
+                                <Border>
+                                    <Button Margin="5,0,10,0" Click="_SaveBtn"  Style="{StaticResource NoBorderButtonStyle}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="{StaticResource Save}"
+                                                   Width="32" Height="32" Margin="0,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </Button>
                                 </Border>
@@ -260,7 +290,7 @@
                                 </Border>
                                 <Border Width="700" Height="50" BorderBrush="DarkGray" BorderThickness="0,1,0,0">
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-                                        <Button Width="60" Content="生成" Margin="10,0,10,0" Click="excuteWall"/>
+                                        <Button Width="60" Content="生成" Margin="10,0,10,0" Click="excuteWall" />
                                         <Button x:Name="btnClose2" Width="60" Content="取消" Margin="10,0,10,0" />
                                     </StackPanel>
                                 </Border>

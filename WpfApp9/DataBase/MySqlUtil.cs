@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Xml;
+using System.IO;
 using MySql.Data.MySqlClient;
+using WpfApp9.BaseData;
 
 namespace WpfApp9.DataBase
 {
@@ -23,16 +25,12 @@ namespace WpfApp9.DataBase
             // ... 其他处理逻辑 ...  
         }
 
-        public string Resolver(string xmlData, string uuid)
+        public string Resolver(string xmlData)
         {
-            //假设 xmlData 是包含完整 XML 数据的字符串  
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(xmlData); // 加载 XML 数据字符串  
-            XmlNodeList wallDataNodes = xmlDoc.SelectNodes("//WallData");
-            XmlNode nameNode = xmlDoc.SelectSingleNode("//FileName"); // 注意这里应该是单数 Node，因为您只选择了一个节点  
-            string fileName = nameNode?.Attributes?["value"]?.Value; // 使用空值传播运算符（?.）来避免空引用异常 
-            return executeData(wallDataNodes, fileName, uuid);
+            XmlHandler xmlHandler = new XmlHandler();
+            return xmlHandler.Resolve(xmlData);
         }
+
 
         public static string executeData(XmlNodeList wallDataNodes, string fileName, string uuid)
         {
@@ -139,6 +137,8 @@ namespace WpfApp9.DataBase
 
             return names;
         }
+
+    
 
         public static void Main()
         {
