@@ -89,6 +89,8 @@ namespace WpfApp9.EntityData
             }
             catch (Exception ex)
             {
+                
+                
             }
         }
 
