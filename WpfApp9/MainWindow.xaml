@@ -110,7 +110,18 @@
                             <ScrollViewer VerticalScrollBarVisibility="Auto" Width="220" Height="320">
                                 <ListBox x:Name="ListBoxYourList"
                                          ItemsSource="{Binding YourList, UpdateSourceTrigger=PropertyChanged}"
+                                         SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}"
                                          SelectionMode="Single" MouseDoubleClick="ListBoxYourList_MouseDoubleClick">
+                                    <ListBox.ItemContainerStyle>
+                                        <Style TargetType="{x:Type ListBoxItem}">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsSelected" Value="True">
+                                                    <Setter Property="Background" Value="LightBlue" />
+                                                    <Setter Property="Foreground" Value="Red" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ListBox.ItemContainerStyle>
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding}" TextWrapping="Wrap" Margin="2,2,0,2" />
@@ -145,7 +156,7 @@
                         <Border Height="70">
                             <StackPanel Orientation="Horizontal" Margin="10">
                                 <Border Width="100" Height="30">
-                                    <Button Content="预览" Margin="5,0,10,0" Click="Bt5_Click"/>
+                                    <Button Content="预览" Margin="5,0,10,0" Click="Bt5_Click" />
                                 </Border>
                             </StackPanel>
                         </Border>
@@ -164,7 +175,8 @@
                                               DisplayMemberPath="." />
                                 </Border>
                                 <Border>
-                                    <Button Margin="5,0,10,0" Click="_DeleteBtn" Style="{StaticResource NoBorderButtonStyle}">
+                                    <Button Margin="5,0,10,0" Click="_DeleteBtn"
+                                            Style="{StaticResource NoBorderButtonStyle}">
                                         <StackPanel Orientation="Horizontal">
                                             <Image Source="{StaticResource DeleteBtn}"
                                                    Width="32" Height="32" Margin="0,0,0,0" VerticalAlignment="Center" />
@@ -172,7 +184,8 @@
                                     </Button>
                                 </Border>
                                 <Border>
-                                    <Button Margin="5,0,10,0" Click="_ImportBtn" Style="{StaticResource NoBorderButtonStyle}">
+                                    <Button Margin="5,0,10,0" Click="_ImportBtn"
+                                            Style="{StaticResource NoBorderButtonStyle}">
                                         <StackPanel Orientation="Horizontal">
                                             <Image Source="{StaticResource ImportIcon}"
                                                    Width="32" Height="32" Margin="0,0,0,0" VerticalAlignment="Center" />
@@ -180,7 +193,8 @@
                                     </Button>
                                 </Border>
                                 <Border>
-                                    <Button Margin="5,0,10,0" Click="_SaveBtn"  Style="{StaticResource NoBorderButtonStyle}">
+                                    <Button Margin="5,0,10,0" Click="_SaveBtn"
+                                            Style="{StaticResource NoBorderButtonStyle}">
                                         <StackPanel Orientation="Horizontal">
                                             <Image Source="{StaticResource Save}"
                                                    Width="32" Height="32" Margin="0,0,0,0" VerticalAlignment="Center" />
@@ -209,7 +223,10 @@
                                                 </Grid.ColumnDefinitions>
                                                 <TextBlock Grid.Column="0" Text="层高 :" Margin="0,0,10,0"
                                                            VerticalAlignment="Center" />
-                                                <TextBox Grid.Column="1" Text="5000" HorizontalAlignment="Left"
+                                                <TextBox Grid.Column="1"
+                                                         x:Name="StoreyHeight"
+                                                         Text="{Binding Heights, UpdateSourceTrigger=PropertyChanged}"
+                                                         HorizontalAlignment="Left"
                                                          VerticalAlignment="Center" Width="150" />
                                                 <TextBlock Grid.Column="2" Text="mm" Margin="10,0,0,0"
                                                            VerticalAlignment="Center" />
@@ -237,7 +254,7 @@
                                             </Grid>
 
                                             <!-- 数据行 -->
-                                            <ItemsControl ItemsSource="{Binding Rows}">
+                                            <ItemsControl x:Name="Rows" ItemsSource="{Binding Rows}">
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate>
                                                         <Grid>
@@ -249,25 +266,29 @@
                                                             </Grid.ColumnDefinitions>
                                                             <Border Grid.Column="0" BorderBrush="Black"
                                                                     BorderThickness="1">
-                                                                <TextBlock Text="{Binding Label1}"
+                                                                <TextBlock x:Name="Label_1" Text="{Binding Label1}"
                                                                            HorizontalAlignment="Center"
                                                                            VerticalAlignment="Center" Margin="4" />
                                                             </Border>
                                                             <Border Grid.Column="1" BorderBrush="Black"
                                                                     BorderThickness="1">
-                                                                <TextBlock Text="{Binding Label2}"
+                                                                <TextBlock x:Name="Label_2" Text="{Binding Label2}"
                                                                            HorizontalAlignment="Center"
                                                                            VerticalAlignment="Center" Margin="4" />
                                                             </Border>
                                                             <Border Grid.Column="2" BorderBrush="Black"
                                                                     BorderThickness="1">
-                                                                <ComboBox ItemsSource="{Binding DropDownOptions1}"
+                                                                <ComboBox x:Name="Label_3"
+                                                                          ItemsSource="{Binding DropDownOptions1}"
+                                                                          SelectedItem="{Binding SelectedOption1, Mode=TwoWay}" 
                                                                           HorizontalAlignment="Stretch"
                                                                           VerticalAlignment="Center" Margin="5" />
                                                             </Border>
                                                             <Border Grid.Column="3" BorderBrush="Black"
                                                                     BorderThickness="1">
-                                                                <ComboBox ItemsSource="{Binding DropDownOptions2}"
+                                                                <ComboBox x:Name="Label_4"
+                                                                          ItemsSource="{Binding DropDownOptions2}"
+                                                                          SelectedItem="{Binding SelectedOption2, Mode=TwoWay}"
                                                                           HorizontalAlignment="Stretch"
                                                                           VerticalAlignment="Center" Margin="5">
                                                                     <ComboBox.ItemTemplate>

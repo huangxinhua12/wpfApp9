@@ -41,9 +41,13 @@ namespace WpfApp9
 
         public MainWindow()
         {
+            //打开窗口初始化操作
             InitializeComponent();
+            this.Loaded += MainWindow_Loaded; // 订阅窗口的Loaded事件 
+
             _viewModel = new YourViewModel();
             _createWall = new CreateWall();
+            //定义外部事件
             _externalEvent = ExternalEvent.Create(_createWall);
             this.DataContext = _viewModel;
             btnMin.Click += (s, e) => { this.WindowState = WindowState.Minimized; };
@@ -68,6 +72,15 @@ namespace WpfApp9
                 else
                     this.WindowState = WindowState.Normal;
             };
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (ListBoxYourList.Items.Count > 0)
+            {
+                ListBoxYourList.SelectedIndex = 0; // 设置选中第一个元素  
+                // 或者使用 ListBoxYourList.SelectedItem = ListBoxYourList.Items[0];  
+            }
         }
 
         private async void ImportButton_Click(object sender, RoutedEventArgs e)
@@ -159,6 +172,11 @@ namespace WpfApp9
                 if (selectedItem is string item)
                 {
                     // 显示确认删除的窗口  
+                    if (!item.EndsWith(".xml", StringComparison.OrdinalIgnoreCase))
+                    {
+                        item += ".xml";
+                    }
+
                     MessageBoxResult result = MessageBox.Show($"您确定要删除图纸: {item} 吗？", "确认删除", MessageBoxButton.YesNo,
                         MessageBoxImage.Warning);
                     if (result == MessageBoxResult.Yes)
@@ -181,6 +199,10 @@ namespace WpfApp9
                         // 用户取消删除，不执行任何操作  
                     }
                 }
+            }
+            else
+            {
+                MessageBox.Show("请选择图纸");
             }
         }
 
@@ -219,7 +241,7 @@ namespace WpfApp9
                 if (selectedItem is string item)
                 {
                     // 提取 name 属性  
-                    _createWall._fileName = item; // 假设 YourListItemType 有一个名为 name 的属性 
+                    _createWall._fileName = item + ".xml"; // 假设 YourListItemType 有一个名为 name 的属性 
                     // 显示确认删除的窗口  
                     MessageBoxResult result = MessageBox.Show($"您确定要生成: {item} 吗？", "确认生成", MessageBoxButton.YesNo,
                         MessageBoxImage.Warning);
@@ -276,12 +298,24 @@ namespace WpfApp9
 
         private void _ImportBtn(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("");
+            MessageBox.Show("导入事件");
         }
 
         private void _SaveBtn(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("");
+            var selectedItem = myComboBox.SelectedItem;
+            var storeyHeight = StoreyHeight.Text;
+            foreach (var row in _viewModel.Rows) // 假设 RowsCollection 是你的数据源集合  
+            {
+                string selectedOption1 = row.SelectedOption1; // 获取第一个 ComboBox 的选中项  
+                string
+                    defaultOption2 =
+                        row.SelectedOption2; // 获取第二个 ComboBox 的选中项（注意这里可能应该是 SelectedOption2，根据你的代码和需求来定）  
+                string label1 = row.Label1;
+                string label2 = row.Label2;
+                MessageBox.Show("保存事件:" + label1 + "," + label2 + "," + selectedOption1 + "," + defaultOption2);
+                // 处理这些选中项...  
+            }
         }
 
         private void Bt5_Click(object sender, RoutedEventArgs e)

@@ -45,6 +45,7 @@ namespace WpfApp9.EntityData
                     }
                     if (xmlFile != null)
                     {
+                        //查询list节点
                         XmlNodeList wallDataNodes = xmlFile.SelectNodes("//WallData");
                         List<WallData> wallList = new WallData().ReadWallDataFromXml(wallDataNodes);
                         foreach (var data in wallList)
