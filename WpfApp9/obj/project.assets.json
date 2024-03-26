@@ -5,14 +5,10 @@
       "BouncyCastle.Cryptography/2.2.1": {
         "type": "package",
         "compile": {
-          "lib/net461/BouncyCastle.Cryptography.dll": {
-            "related": ".xml"
-          }
+          "lib/net461/BouncyCastle.Cryptography.dll": {}
         },
         "runtime": {
-          "lib/net461/BouncyCastle.Cryptography.dll": {
-            "related": ".xml"
-          }
+          "lib/net461/BouncyCastle.Cryptography.dll": {}
         }
       },
       "DryIoc.dll/5.4.3": {
@@ -21,14 +17,10 @@
           "System.ValueTuple": "4.5.0"
         },
         "compile": {
-          "lib/net45/DryIoc.dll": {
-            "related": ".xml"
-          }
+          "lib/net45/DryIoc.dll": {}
         },
         "runtime": {
-          "lib/net45/DryIoc.dll": {
-            "related": ".xml"
-          }
+          "lib/net45/DryIoc.dll": {}
         }
       },
       "Google.Protobuf/3.25.1": {
@@ -37,14 +29,10 @@
           "System.Memory": "4.5.3"
         },
         "compile": {
-          "lib/net45/Google.Protobuf.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/net45/Google.Protobuf.dll": {}
         },
         "runtime": {
-          "lib/net45/Google.Protobuf.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/net45/Google.Protobuf.dll": {}
         }
       },
       "K4os.Compression.LZ4/1.3.5": {
@@ -54,14 +42,10 @@
           "System.Runtime.CompilerServices.Unsafe": "6.0.0"
         },
         "compile": {
-          "lib/net462/K4os.Compression.LZ4.dll": {
-            "related": ".xml"
-          }
+          "lib/net462/K4os.Compression.LZ4.dll": {}
         },
         "runtime": {
-          "lib/net462/K4os.Compression.LZ4.dll": {
-            "related": ".xml"
-          }
+          "lib/net462/K4os.Compression.LZ4.dll": {}
         }
       },
       "K4os.Compression.LZ4.Streams/1.3.5": {
@@ -72,14 +56,10 @@
           "System.IO.Pipelines": "5.0.2"
         },
         "compile": {
-          "lib/net462/K4os.Compression.LZ4.Streams.dll": {
-            "related": ".xml"
-          }
+          "lib/net462/K4os.Compression.LZ4.Streams.dll": {}
         },
         "runtime": {
-          "lib/net462/K4os.Compression.LZ4.Streams.dll": {
-            "related": ".xml"
-          }
+          "lib/net462/K4os.Compression.LZ4.Streams.dll": {}
         }
       },
       "K4os.Hash.xxHash/1.0.8": {
@@ -89,27 +69,19 @@
           "System.Runtime.CompilerServices.Unsafe": "6.0.0"
         },
         "compile": {
-          "lib/net462/K4os.Hash.xxHash.dll": {
-            "related": ".xml"
-          }
+          "lib/net462/K4os.Hash.xxHash.dll": {}
         },
         "runtime": {
-          "lib/net462/K4os.Hash.xxHash.dll": {
-            "related": ".xml"
-          }
+          "lib/net462/K4os.Hash.xxHash.dll": {}
         }
       },
       "MaterialDesignColors/2.0.1": {
         "type": "package",
         "compile": {
-          "lib/net452/MaterialDesignColors.dll": {
-            "related": ".pdb"
-          }
+          "lib/net452/MaterialDesignColors.dll": {}
         },
         "runtime": {
-          "lib/net452/MaterialDesignColors.dll": {
-            "related": ".pdb"
-          }
+          "lib/net452/MaterialDesignColors.dll": {}
         }
       },
       "MaterialDesignThemes/4.1.0": {
@@ -118,14 +90,10 @@
           "MaterialDesignColors": "2.0.1"
         },
         "compile": {
-          "lib/net452/MaterialDesignThemes.Wpf.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/net452/MaterialDesignThemes.Wpf.dll": {}
         },
         "runtime": {
-          "lib/net452/MaterialDesignThemes.Wpf.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/net452/MaterialDesignThemes.Wpf.dll": {}
         },
         "build": {
           "build/MaterialDesignThemes.targets": {}
@@ -140,14 +108,10 @@
           "mscorlib"
         ],
         "compile": {
-          "lib/net461/Microsoft.Bcl.AsyncInterfaces.dll": {
-            "related": ".xml"
-          }
+          "lib/net461/Microsoft.Bcl.AsyncInterfaces.dll": {}
         },
         "runtime": {
-          "lib/net461/Microsoft.Bcl.AsyncInterfaces.dll": {
-            "related": ".xml"
-          }
+          "lib/net461/Microsoft.Bcl.AsyncInterfaces.dll": {}
         }
       },
       "Microsoft.Xaml.Behaviors.Wpf/1.1.39": {
@@ -162,14 +126,10 @@
           "WindowsBase"
         ],
         "compile": {
-          "lib/net45/Microsoft.Xaml.Behaviors.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/net45/Microsoft.Xaml.Behaviors.dll": {}
         },
         "runtime": {
-          "lib/net45/Microsoft.Xaml.Behaviors.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/net45/Microsoft.Xaml.Behaviors.dll": {}
         }
       },
       "MySql.Data/8.3.0": {
@@ -193,14 +153,10 @@
           "System.Transactions"
         ],
         "compile": {
-          "lib/net462/MySql.Data.dll": {
-            "related": ".xml"
-          }
+          "lib/net462/MySql.Data.dll": {}
         },
         "runtime": {
-          "lib/net462/MySql.Data.dll": {
-            "related": ".xml"
-          }
+          "lib/net462/MySql.Data.dll": {}
         },
         "runtimeTargets": {
           "runtimes/win-x64/native/comerr64.dll": {
@@ -228,14 +184,10 @@
       "Newtonsoft.Json/13.0.3": {
         "type": "package",
         "compile": {
-          "lib/net45/Newtonsoft.Json.dll": {
-            "related": ".xml"
-          }
+          "lib/net45/Newtonsoft.Json.dll": {}
         },
         "runtime": {
-          "lib/net45/Newtonsoft.Json.dll": {
-            "related": ".xml"
-          }
+          "lib/net45/Newtonsoft.Json.dll": {}
         }
       },
       "System.Buffers/4.5.1": {
@@ -244,14 +196,10 @@
           "mscorlib"
         ],
         "compile": {
-          "ref/net45/System.Buffers.dll": {
-            "related": ".xml"
-          }
+          "ref/net45/System.Buffers.dll": {}
         },
         "runtime": {
-          "lib/net461/System.Buffers.dll": {
-            "related": ".xml"
-          }
+          "lib/net461/System.Buffers.dll": {}
         }
       },
       "System.Configuration.ConfigurationManager/4.4.1": {
@@ -263,9 +211,7 @@
           "mscorlib"
         ],
         "compile": {
-          "ref/net461/System.Configuration.ConfigurationManager.dll": {
-            "related": ".xml"
-          }
+          "ref/net461/System.Configuration.ConfigurationManager.dll": {}
         },
         "runtime": {
           "lib/net461/System.Configuration.ConfigurationManager.dll": {}
@@ -278,14 +224,10 @@
           "System.Runtime.CompilerServices.Unsafe": "6.0.0"
         },
         "compile": {
-          "lib/net462/System.Diagnostics.DiagnosticSource.dll": {
-            "related": ".xml"
-          }
+          "lib/net462/System.Diagnostics.DiagnosticSource.dll": {}
         },
         "runtime": {
-          "lib/net462/System.Diagnostics.DiagnosticSource.dll": {
-            "related": ".xml"
-          }
+          "lib/net462/System.Diagnostics.DiagnosticSource.dll": {}
         },
         "build": {
           "buildTransitive/net462/_._": {}
@@ -315,14 +257,10 @@
           "mscorlib"
         ],
         "compile": {
-          "lib/net461/System.IO.Pipelines.dll": {
-            "related": ".xml"
-          }
+          "lib/net461/System.IO.Pipelines.dll": {}
         },
         "runtime": {
-          "lib/net461/System.IO.Pipelines.dll": {
-            "related": ".xml"
-          }
+          "lib/net461/System.IO.Pipelines.dll": {}
         }
       },
       "System.Memory/4.5.5": {
@@ -337,14 +275,10 @@
           "mscorlib"
         ],
         "compile": {
-          "lib/net461/System.Memory.dll": {
-            "related": ".xml"
-          }
+          "lib/net461/System.Memory.dll": {}
         },
         "runtime": {
-          "lib/net461/System.Memory.dll": {
-            "related": ".xml"
-          }
+          "lib/net461/System.Memory.dll": {}
         }
       },
       "System.Net.Http/4.3.4": {
@@ -381,14 +315,10 @@
           "mscorlib"
         ],
         "compile": {
-          "ref/net46/System.Numerics.Vectors.dll": {
-            "related": ".xml"
-          }
+          "ref/net46/System.Numerics.Vectors.dll": {}
         },
         "runtime": {
-          "lib/net46/System.Numerics.Vectors.dll": {
-            "related": ".xml"
-          }
+          "lib/net46/System.Numerics.Vectors.dll": {}
         }
       },
       "System.Runtime/4.3.0": {
@@ -412,14 +342,10 @@
           "mscorlib"
         ],
         "compile": {
-          "lib/net461/System.Runtime.CompilerServices.Unsafe.dll": {
-            "related": ".xml"
-          }
+          "lib/net461/System.Runtime.CompilerServices.Unsafe.dll": {}
         },
         "runtime": {
-          "lib/net461/System.Runtime.CompilerServices.Unsafe.dll": {
-            "related": ".xml"
-          }
+          "lib/net461/System.Runtime.CompilerServices.Unsafe.dll": {}
         }
       },
       "System.Security.Cryptography.Algorithms/4.3.0": {
@@ -527,14 +453,10 @@
           "mscorlib"
         ],
         "compile": {
-          "lib/net461/System.Threading.Tasks.Extensions.dll": {
-            "related": ".xml"
-          }
+          "lib/net461/System.Threading.Tasks.Extensions.dll": {}
         },
         "runtime": {
-          "lib/net461/System.Threading.Tasks.Extensions.dll": {
-            "related": ".xml"
-          }
+          "lib/net461/System.Threading.Tasks.Extensions.dll": {}
         }
       },
       "System.ValueTuple/4.5.0": {
@@ -546,9 +468,7 @@
           "ref/net47/System.ValueTuple.dll": {}
         },
         "runtime": {
-          "lib/net47/System.ValueTuple.dll": {
-            "related": ".xml"
-          }
+          "lib/net47/System.ValueTuple.dll": {}
         }
       },
       "Yumikou.Prism.Core/8.2.2": {

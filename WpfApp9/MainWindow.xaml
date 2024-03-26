@@ -170,7 +170,7 @@
                             <StackPanel Orientation="Horizontal" Margin="10">
                                 <TextBlock Text="预设方案 :" VerticalAlignment="Center" Margin="10,0,10,0" />
                                 <Border>
-                                    <ComboBox x:Name="myComboBox" Width="450" Margin="10,0,10,0" SelectedIndex="0"
+                                    <ComboBox x:Name="myComboBox" Width="450" Margin="10,0,10,0"
                                               Height="25" ItemsSource="{Binding MyOptions}"
                                               DisplayMemberPath="." />
                                 </Border>

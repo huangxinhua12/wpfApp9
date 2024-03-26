@@ -97,7 +97,6 @@ namespace WpfApp9
             // 初始化MyOptions属性，并添加一些选项字符串  
             MyOptions = new ObservableCollection<string>
             {
-                "自定义",
                 "选项1",
                 "选项2",
                 "选项3",

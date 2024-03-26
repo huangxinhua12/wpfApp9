@@ -19,6 +19,7 @@ using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Autodesk.Revit.UI;
+using DryIoc.ImTools;
 using Newtonsoft.Json;
 using WpfApp9;
 using WpfApp9.BaseData;
@@ -86,8 +87,9 @@ namespace WpfApp9
         private async void ImportButton_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "DXF文件 (*.dxf)|*.dxf";
-            openFileDialog.Filter = "DWG 文件 (*.dwg)|*.dwg";
+            openFileDialog.Filter = "*.dxf|*.dwg";
+            openFileDialog.FilterIndex = 1; // 设置默认选中的文件类型为 DXF  
+            openFileDialog.Title = "请选择要导入的 DXF 或 DWG 文件"; // 设置对话框标题（可选）
             if (openFileDialog.ShowDialog() == true)
             {
                 string selectedFilePath = openFileDialog.FileName;
@@ -137,7 +139,13 @@ namespace WpfApp9
                                     //string res = mySql.Resolver(result.Data.ToString(), uuid);
                                     XmlHandler xmlHandler = new XmlHandler();
                                     string res = xmlHandler.Resolve(result.Data.ToString());
-                                    _viewModel.YourList.Add(res);
+                                    _viewModel.YourList.Insert(0, res);
+                                    if (ListBoxYourList.Items.Count > 0)
+                                    {
+                                        //ListBoxYourList.SelectedIndex = 0; // 设置选中第一个元素  
+                                        ListBoxYourList.SelectedItem = ListBoxYourList.Items[0]; // 设置选中第一个元素  
+                                    }
+
                                     MessageBox.Show($"操作成功: {res}");
                                     // 处理 Data 属性，可能需要进一步解析或转换为具体类型  
                                 }
@@ -281,7 +289,7 @@ namespace WpfApp9
                     if (result == MessageBoxResult.Yes)
                     {
                         // 删除数据库中的记录  
-                        MessageBox.Show(" 删除数据库中的记录  ");
+                        MessageBox.Show("已删除数据");
                     }
                     else
                     {
@@ -298,7 +306,12 @@ namespace WpfApp9
 
         private void _ImportBtn(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("导入事件");
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "xml文件 (*.xml)|*.xml";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                MessageBox.Show("导入事件");
+            }
         }
 
         private void _SaveBtn(object sender, RoutedEventArgs e)
@@ -313,9 +326,11 @@ namespace WpfApp9
                         row.SelectedOption2; // 获取第二个 ComboBox 的选中项（注意这里可能应该是 SelectedOption2，根据你的代码和需求来定）  
                 string label1 = row.Label1;
                 string label2 = row.Label2;
-                MessageBox.Show("保存事件:" + label1 + "," + label2 + "," + selectedOption1 + "," + defaultOption2);
+                //MessageBox.Show("保存事件:" + label1 + "," + label2 + "," + selectedOption1 + "," + defaultOption2);
                 // 处理这些选中项...  
             }
+
+            MessageBox.Show("保存事件:" + _viewModel.Rows.Count);
         }
 
         private void Bt5_Click(object sender, RoutedEventArgs e)

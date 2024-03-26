@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Xml;
 
@@ -43,15 +44,19 @@ namespace WpfApp9.BaseData
             {
                 // 获取文件夹中所有文件的文件名，并过滤出.xml文件  
                 string[] xmlFiles = Directory.GetFiles(folderPath, "*.xml", SearchOption.AllDirectories);
-
+                // 将文件路径转换为FileInfo对象，以便访问最后修改时间  
+                var fileInfos = xmlFiles.Select(path => new FileInfo(path));
+                // 使用LINQ按最后修改时间升序排序  
+                //var sortedFileInfos = fileInfos.OrderBy(fileInfo => fileInfo.LastWriteTime);
+                // 如果您想按降序排序，可以使用OrderByDescending  
+                var sortedFileInfosDesc = fileInfos.OrderByDescending(fileInfo => fileInfo.LastWriteTime);
                 // 遍历数组并打印每个.xml文件的文件名  
-                foreach (string file in xmlFiles)
+                foreach (var fileInfo in sortedFileInfosDesc)
                 {
                     // 如果你只需要文件名，而不是完整路径，可以使用Path.GetFileName方法  
-                    //Console.WriteLine(Path.GetFileName(file));
-                    //names.Add(file);
                     //names.Add(Path.GetFileName(file));
-                    names.Add(GetFileNameWithoutExtension(Path.GetFileName(file)));
+                    //Console.WriteLine($"File Name: {fileInfo.Name}, Last Modified: {fileInfo.LastWriteTime}");
+                    names.Add(GetFileNameWithoutExtension(fileInfo.Name));
                 }
             }
             catch (Exception ex)
