@@ -6,6 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:prism="http://prismlibrary.com/"
         xmlns:local="clr-namespace:WpfApp9"
+        xmlns:extension="clr-namespace:WpfApp9.Extension"
         mc:Ignorable="d"
         Title="MainWindow" Width="1100" Height="618"
         AllowsTransparency="True"
@@ -19,6 +20,20 @@
         WindowStartupLocation="CenterScreen"
         WindowStyle="None">
     <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <!-- 定义置灰按钮的样式 -->
+        <Style x:Key="DisabledButtonStyle" TargetType="Button">
+            <!-- 设置默认边框厚度为0 -->
+            <Setter Property="BorderThickness" Value="0" />
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="LightGray" />
+                    <Setter Property="Foreground" Value="DarkGray" />
+                    <!-- 如果需要在置灰时特别指定边框厚度，也可以在这里设置 -->
+                    <!-- <Setter Property="BorderThickness" Value="0"/> -->
+                </Trigger>
+            </Style.Triggers>
+        </Style>
         <Style x:Key="MaterialDesignFlatMidBgButton" TargetType="Button" />
         <Style x:Key="NoBorderButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="Template">
@@ -117,7 +132,7 @@
                                             <Style.Triggers>
                                                 <Trigger Property="IsSelected" Value="True">
                                                     <Setter Property="Background" Value="LightBlue" />
-                                                    <Setter Property="Foreground" Value="Red" />
+                                                    <Setter Property="Foreground" Value="Blue" />
                                                 </Trigger>
                                             </Style.Triggers>
                                         </Style>
@@ -169,13 +184,14 @@
                         <Border BorderBrush="#2F4F4F" BorderThickness="0,0,0,0" Margin="5" Width="700">
                             <StackPanel Orientation="Horizontal" Margin="10">
                                 <TextBlock Text="预设方案 :" VerticalAlignment="Center" Margin="10,0,10,0" />
-                                <Border>
-                                    <ComboBox x:Name="myComboBox" Width="450" Margin="10,0,10,0"
-                                              Height="25" ItemsSource="{Binding MyOptions}"
-                                              DisplayMemberPath="." />
+                                <Border>  
+                                    <!-- 文本框，已调整名称和属性以更好地适应内容 -->  
+                                    <TextBox x:Name="myTextBox" Width="400" Margin="10,0,10,0" Height="24"  
+                                             Text="{Binding SelectedText, UpdateSourceTrigger=PropertyChanged}"  
+                                             TextAlignment="Left" FontSize="14" /> <!-- FontSize 设置了字体大小 -->  
                                 </Border>
                                 <Border>
-                                    <Button Margin="5,0,10,0" Click="_DeleteBtn"
+                                    <Button Margin="0,0,15,0" Click="_DeleteBtn"
                                             Style="{StaticResource NoBorderButtonStyle}">
                                         <StackPanel Orientation="Horizontal">
                                             <Image Source="{StaticResource DeleteBtn}"
@@ -184,7 +200,7 @@
                                     </Button>
                                 </Border>
                                 <Border>
-                                    <Button Margin="5,0,10,0" Click="_ImportBtn"
+                                    <Button Margin="0,0,15,0" Click="_ImportBtn"
                                             Style="{StaticResource NoBorderButtonStyle}">
                                         <StackPanel Orientation="Horizontal">
                                             <Image Source="{StaticResource ImportIcon}"
@@ -193,8 +209,9 @@
                                     </Button>
                                 </Border>
                                 <Border>
-                                    <Button Margin="5,0,10,0" Click="_SaveBtn"
-                                            Style="{StaticResource NoBorderButtonStyle}">
+                                    <Button Margin="0,0,15,0" Click="_SaveBtn"
+                                            Style="{StaticResource DisabledButtonStyle}"
+                                            IsEnabled="{Binding IsItemSelected}">
                                         <StackPanel Orientation="Horizontal">
                                             <Image Source="{StaticResource Save}"
                                                    Width="32" Height="32" Margin="0,0,0,0" VerticalAlignment="Center" />
@@ -212,28 +229,33 @@
                         <Border Width="700" BorderBrush="DarkGray" BorderThickness="1,1,1,1" Margin="5">
                             <StackPanel Orientation="Vertical">
                                 <Border Width="700" Height="280" Background="White">
+                                    <!-- 垂直滚动条 -->
                                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                                         <StackPanel Margin="10">
                                             <!-- 新增的行，包含文字和输入框，靠左对齐 -->
-                                            <Grid Margin="0,0,0,10">
+                                            <Grid Margin="0,0,0,10"
+                                                  Visibility="{Binding IsItemSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="Auto" />
                                                     <ColumnDefinition Width="Auto" />
                                                     <ColumnDefinition Width="*" />
                                                 </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Text="层高 :" Margin="0,0,10,0"
-                                                           VerticalAlignment="Center" />
+                                                <TextBlock
+                                                    Grid.Column="0" Text="层高 :" Margin="0,0,10,0"
+                                                    VerticalAlignment="Center" />
                                                 <TextBox Grid.Column="1"
                                                          x:Name="StoreyHeight"
                                                          Text="{Binding Heights, UpdateSourceTrigger=PropertyChanged}"
                                                          HorizontalAlignment="Left"
                                                          VerticalAlignment="Center" Width="150" />
-                                                <TextBlock Grid.Column="2" Text="mm" Margin="10,0,0,0"
-                                                           VerticalAlignment="Center" />
+                                                <TextBlock
+                                                    Grid.Column="2" Text="mm" Margin="10,0,0,0"
+                                                    VerticalAlignment="Center" />
                                             </Grid>
 
                                             <!-- 标题行 -->
-                                            <Grid Margin="0,0,0,10">
+                                            <Grid Margin="0,0,0,10"
+                                                  Visibility="{Binding IsItemSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="40" />
                                                     <ColumnDefinition Width="160" />
@@ -280,7 +302,7 @@
                                                                     BorderThickness="1">
                                                                 <ComboBox x:Name="Label_3"
                                                                           ItemsSource="{Binding DropDownOptions1}"
-                                                                          SelectedItem="{Binding SelectedOption1, Mode=TwoWay}" 
+                                                                          SelectedItem="{Binding SelectedOption1, Mode=TwoWay}"
                                                                           HorizontalAlignment="Stretch"
                                                                           VerticalAlignment="Center" Margin="5" />
                                                             </Border>

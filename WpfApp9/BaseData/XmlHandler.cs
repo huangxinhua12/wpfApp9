@@ -137,7 +137,7 @@ namespace WpfApp9.BaseData
                 string catalogue = "import";
                 string relative = fileName;
                 string fullPath = Path.Combine(Directory.GetCurrentDirectory(), catalogue, relative);
-                //MessageBox.Show("当前路径:" + fullPath);
+                // MessageBox.Show("当前路径1:" + fullPath);
                 // 确保文件存在  
                 if (!File.Exists(fullPath))
                 {
@@ -147,7 +147,8 @@ namespace WpfApp9.BaseData
                 // 创建 XmlDocument 对象并加载 XML 文件  
                 XmlDocument xmlDoc = new XmlDocument();
                 //如果是文件，则使用 xmlDoc.Load("filePath");  
-                xmlDoc.Load(fullPath); // 使用 Load 方法直接加载文件  
+                xmlDoc.Load(fullPath); // 使用 Load 方法直接加载文件 
+                // MessageBox.Show("当前路径2:" + fullPath);
                 return xmlDoc;
             }
             catch (Exception ex)
@@ -163,7 +164,7 @@ namespace WpfApp9.BaseData
             string catalogue = "import";
             string relative = fileName;
             string fullPath = Path.Combine(Directory.GetCurrentDirectory(), catalogue, relative);
-            MessageBox.Show("当前路径:" + fullPath);
+            //MessageBox.Show("当前路径:" + fullPath);
             // 检查文件是否存在  
             if (File.Exists(fullPath))
             {
@@ -177,6 +178,25 @@ namespace WpfApp9.BaseData
                 MessageBox.Show("指定的文件不存在");
                 return 0;
             }
+        }
+
+        public static string GetBuildingHeightLimit(XmlDocument xmlFile, string SelectSingleNode)
+        {
+            XmlNode buildingHeightLimitNode = xmlFile.SelectSingleNode("//" + SelectSingleNode);
+            if (buildingHeightLimitNode == null)
+            {
+                return null; // 或抛出异常，表示未找到节点  
+            }
+
+            // 首先尝试获取属性值  
+            XmlAttribute attribute = buildingHeightLimitNode.Attributes["value"];
+            if (attribute != null)
+            {
+                return attribute.Value;
+            }
+
+            // 如果没有属性值，则获取文本内容  
+            return buildingHeightLimitNode.InnerText;
         }
     }
 }

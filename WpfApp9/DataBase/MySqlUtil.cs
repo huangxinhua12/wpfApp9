@@ -13,6 +13,7 @@ namespace WpfApp9.DataBase
         public static string ConnectionString = "server=120.24.46.215;userid=admin;password=admin;database=revit2020";
         public static double feet = 0.3048;
 
+        //读取文件
         public string Resolver2(string uuid)
         {
             string xmlFilePath = @"C:\Users\lx\Desktop\1.xml"; // XML文件路径  

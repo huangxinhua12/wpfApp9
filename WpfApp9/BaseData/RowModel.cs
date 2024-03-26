@@ -39,7 +39,8 @@ namespace WpfApp9.BaseData
         }
 
         // 构造函数，带有四个参数，用于初始化RowModel实例的状态  
-        public RowModel(string label1, string label2, ObservableCollection<string> dropDownOptions1, ObservableCollection<string> dropDownOptions2)
+        public RowModel(string label1, string label2, ObservableCollection<string> dropDownOptions1,
+            ObservableCollection<string> dropDownOptions2)
         {
             Label1 = label1; // 设置Label1属性的值  
             Label2 = label2; // 设置Label2属性的值（注意这里没有属性变更通知）  
@@ -51,11 +52,42 @@ namespace WpfApp9.BaseData
         public RowModel()
         {
             // 假设已经有一些选项填充到了DropDownOptions1和DropDownOptions2中  
-            DropDownOptions1 = new ObservableCollection<string> { "Option1", "Option2", "Option3" };  
-            DropDownOptions2 = new ObservableCollection<string> { "Choice1", "Choice2", "Choice3" };  
+            DropDownOptions1 = new ObservableCollection<string>();
+            for (int i = 1; i <= 20; i++)
+            {
+                DropDownOptions1.Add("预设图层-" + i);
+            }
+
+            DropDownOptions2 = new ObservableCollection<string>();
+            for (int i = 1; i <= 20; i++)
+            {
+                DropDownOptions2.Add("饰面工程-" + i);
+            }
+
             // 设置默认选中为第一个选项  
-            SelectedOption1 = DropDownOptions1.FirstOrDefault();  
-            SelectedOption2 = DropDownOptions2.FirstOrDefault();  
+            SelectedOption1 = DropDownOptions1.FirstOrDefault();
+            SelectedOption2 = DropDownOptions2.FirstOrDefault();
+        }
+
+        public RowModel(string label1, string label2, string selectedOption1, string selectedOption2,
+            ObservableCollection<string> dropDownOptions1, ObservableCollection<string> dropDownOptions2)
+        {
+            this.Label1 = label1;
+            this.Label2 = label2;
+            DropDownOptions1 = new ObservableCollection<string>();
+            for (int i = 1; i <= 20; i++)
+            {
+                DropDownOptions1.Add("预设图层-" + i);
+            }
+
+            DropDownOptions2 = new ObservableCollection<string>();
+            for (int i = 1; i <= 20; i++)
+            {
+                DropDownOptions2.Add("饰面工程-" + i);
+            }
+            // 设置默认选中为第一个选项  
+            SelectedOption1 = selectedOption1;
+            SelectedOption2 = selectedOption2;
         }
 
         public RowModel(string label1, string label2)
@@ -63,11 +95,20 @@ namespace WpfApp9.BaseData
             this.Label1 = label1;
             this.Label2 = label2;
             // 假设已经有一些选项填充到了DropDownOptions1和DropDownOptions2中  
-            DropDownOptions1 = new ObservableCollection<string> { "Option1", "Option2", "Option3" };  
-            DropDownOptions2 = new ObservableCollection<string> { "Choice1", "Choice2", "Choice3" };  
+            DropDownOptions1 = new ObservableCollection<string>();
+            for (int i = 1; i <= 20; i++)
+            {
+                DropDownOptions1.Add("预设图层-" + i);
+            }
+
+            DropDownOptions2 = new ObservableCollection<string>();
+            for (int i = 1; i <= 20; i++)
+            {
+                DropDownOptions2.Add("饰面工程-" + i);
+            }
             // 设置默认选中为第一个选项  
-            SelectedOption1 = DropDownOptions1.FirstOrDefault();  
-            SelectedOption2 = DropDownOptions2.FirstOrDefault();  
+            SelectedOption1 = DropDownOptions1.FirstOrDefault();
+            SelectedOption2 = DropDownOptions2.FirstOrDefault();
         }
 
         // SelectedOption1属性封装了_selectedOption1字段，并提供了属性变更通知  

@@ -18,6 +18,8 @@ using Microsoft.Win32;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 using Autodesk.Revit.UI;
 using DryIoc.ImTools;
 using Newtonsoft.Json;
@@ -79,7 +81,7 @@ namespace WpfApp9
         {
             if (ListBoxYourList.Items.Count > 0)
             {
-                ListBoxYourList.SelectedIndex = 0; // 设置选中第一个元素  
+                //ListBoxYourList.SelectedIndex = 0; // 设置选中第一个元素  
                 // 或者使用 ListBoxYourList.SelectedItem = ListBoxYourList.Items[0];  
             }
         }
@@ -139,7 +141,15 @@ namespace WpfApp9
                                     //string res = mySql.Resolver(result.Data.ToString(), uuid);
                                     XmlHandler xmlHandler = new XmlHandler();
                                     string res = xmlHandler.Resolve(result.Data.ToString());
-                                    _viewModel.YourList.Insert(0, res);
+                                    if (!_viewModel.YourList.Contains(res))
+                                    {
+                                        _viewModel.YourList.Insert(0, res);
+                                    }
+                                    else
+                                    {
+                                        //MessageBox.Show("文件名重复覆盖原文件");
+                                    }
+
                                     if (ListBoxYourList.Items.Count > 0)
                                     {
                                         //ListBoxYourList.SelectedIndex = 0; // 设置选中第一个元素  
@@ -196,10 +206,34 @@ namespace WpfApp9
                         int tags = xmlHandler.DeleteFile(item);
                         if (tags > 0)
                         {
-                            // 从视图模型中删除该项  
+                            // 从视图模型中删除该项    
                             _viewModel.YourList.RemoveAt(ListBoxYourList.SelectedIndex);
-                            // 同步更新ListBox的选中状态（如果需要）  
-                            ListBoxYourList.SelectedIndex = -1;
+
+                            // 同步更新ListBox的选中状态  
+                            if (_viewModel.YourList.Count > 0)
+                            {
+                                // 如果列表不为空，选中第一个元素  
+                                ListBoxYourList.SelectedIndex = 0;
+                                // 显示删除成功消息，并且告知用户当前选中的元素（如果需要）  
+                                var currentlySelectedItem = ListBoxYourList.SelectedItem;
+                                //MessageBox.Show($"删除成功！当前选中的元素是：{currentlySelectedItem}");
+                            }
+                            else
+                            {
+                                // 列表为空，没有元素可以被选中  
+                                ListBoxYourList.SelectedIndex = -1;
+                                _viewModel.Rows = new ObservableCollection<RowModel>();
+                                _viewModel.IsItemSelected = false;
+                                //MessageBox.Show("删除成功！列表现在为空。");
+                            }
+
+                            // 如果需要更新_viewModel.Rows，请在这里添加相应的逻辑  
+                            // 例如：_viewModel.UpdateRowsAfterDelete(); // 假设有这样的方法来更新Rows集合  
+                        }
+                        else
+                        {
+                            // 删除失败的情况处理（如果需要的话）  
+                            MessageBox.Show("删除失败！");
                         }
                     }
                     else
@@ -276,10 +310,10 @@ namespace WpfApp9
 
         private void _DeleteBtn(object sender, RoutedEventArgs e)
         {
-            if (myComboBox.SelectedIndex >= 0) // 确保有选中的项  
+            if (myTextBox.Text.Length > 0) // 确保有选中的项  
             {
                 // 获取选中的项  
-                var selectedItem = myComboBox.SelectedItem;
+                var selectedItem = myTextBox.Text;
                 // 假设你的数据项是字符串类型  
                 if (selectedItem is string item)
                 {
@@ -308,16 +342,85 @@ namespace WpfApp9
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "xml文件 (*.xml)|*.xml";
+            string directoryPath = "saveXml";
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), directoryPath);
+            openFileDialog.InitialDirectory = filePath; // 设置默认打开的目录 
             if (openFileDialog.ShowDialog() == true)
             {
-                MessageBox.Show("导入事件");
+                string selectedFilePath = openFileDialog.FileName;
+                string fileName = Path.GetFileName(selectedFilePath);
+                string destinationDirectory = Path.Combine(Directory.GetCurrentDirectory(), "import"); // 设置目标目录路径  
+                string destinationFilePath =
+                    Path.Combine(destinationDirectory, Path.GetFileName(selectedFilePath)); // 设置目标文件路径
+                // MessageBox.Show(selectedFilePath);
+                // 确保目标目录存在，如果不存在则创建  
+                if (!Directory.Exists(destinationDirectory))
+                {
+                    Directory.CreateDirectory(destinationDirectory);
+                }
+
+                // 复制文件到目标目录  
+                File.Copy(selectedFilePath, destinationFilePath, true); // 第三个参数为true时，表示可以覆盖同名文件  
+                if (!_viewModel.YourList.Contains(XmlHandler.GetFileNameWithoutExtension(fileName)))
+                {
+                    _viewModel.YourList.Insert(0, XmlHandler.GetFileNameWithoutExtension(fileName));
+                }
+                else
+                {
+                    //MessageBox.Show("文件名重复覆盖原文件");
+                }
+
+                if (ListBoxYourList.Items.Count > 0)
+                {
+                    ListBoxYourList.SelectedIndex = 0; // 设置选中第一个元素  
+                }
             }
         }
 
+
         private void _SaveBtn(object sender, RoutedEventArgs e)
         {
-            var selectedItem = myComboBox.SelectedItem;
+            var selectedItem = myTextBox.Text;
             var storeyHeight = StoreyHeight.Text;
+            // 创建一个要序列化的对象，这里我们创建一个包含所有需要保存数据的类  
+            var dataToSave = new SaveData
+            {
+                SelectedItem = selectedItem,
+                StoreyHeight = storeyHeight,
+                Rows = new List<SaveData.RowData>(_viewModel.Rows
+                    .Count) // 假设 _viewModel.Rows 是 IEnumerable<RowData> 类型  
+            };
+            // 复制 _viewModel.Rows 中的数据到 dataToSave.Rows 列表中  
+            foreach (var row in _viewModel.Rows)
+            {
+                dataToSave.Rows.Add(new SaveData.RowData
+                {
+                    Label1 = row.Label1,
+                    Label2 = row.Label2,
+                    SelectedOption1 = row.SelectedOption1,
+                    SelectedOption2 = row.SelectedOption2 // 注意属性名称应该与您的 Row 类中的属性匹配  
+                });
+            }
+
+            string directoryPath = "saveXml";
+            string fileName = "(方案)" + selectedItem + ".xml";
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), directoryPath, fileName);
+            // 确保目录存在，如果不存在则创建  
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+
+            // 序列化对象到指定目录的 XML 文件中  
+            var serializer = new XmlSerializer(typeof(SaveData));
+            using (var writer = new StreamWriter(filePath))
+            {
+                serializer.Serialize(writer, dataToSave);
+            }
+
+            // 提示保存成功消息框（可选）  
+            MessageBox.Show($"数据已保存到 XML 文件中,{filePath}");
+
             foreach (var row in _viewModel.Rows) // 假设 RowsCollection 是你的数据源集合  
             {
                 string selectedOption1 = row.SelectedOption1; // 获取第一个 ComboBox 的选中项  

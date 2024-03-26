@@ -42,7 +42,7 @@ C:\Users\lx\Desktop\cad\WpfApp9\WpfApp9\obj\Debug\net471\WpfApp9.pdb
 C:\Users\lx\Desktop\cad\WpfApp9\WpfApp9\obj\Debug\net471\WpfApp9.csproj.AssemblyReference.cache
 C:\Users\lx\Desktop\cad\WpfApp9\WpfApp9\obj\Debug\net471\GeneratedInternalTypeHelper.g.cs
 C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\WpfApp9.dll
-C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\MaterialDesignThemes.Wpf.dll
+C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\WpfApp9.pdb
 C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\BouncyCastle.Cryptography.dll
 C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\DryIoc.dll
 C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\Google.Protobuf.dll
@@ -50,6 +50,7 @@ C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\K4os.Compression.LZ4.dl
 C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\K4os.Compression.LZ4.Streams.dll
 C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\K4os.Hash.xxHash.dll
 C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\MaterialDesignColors.dll
+C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\MaterialDesignThemes.Wpf.dll
 C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\Microsoft.Xaml.Behaviors.dll
 C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\MySql.Data.dll
@@ -82,4 +83,4 @@ C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\obj\Debug\net471\WpfApp9.csproj.CoreComp
 C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\obj\Debug\net471\WpfApp9.csproj.CopyComplete
 C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\obj\Debug\net471\WpfApp9.dll
 C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\obj\Debug\net471\WpfApp9.pdb
-C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\bin\Debug\net471\WpfApp9.pdb
+C:\Users\lx\Desktop\wpf\wpfApp9\WpfApp9\obj\Debug\net471\WpfApp9.csproj.AssemblyReference.cache

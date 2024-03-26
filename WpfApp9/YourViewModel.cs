@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Xml;
@@ -51,6 +53,34 @@ namespace WpfApp9
             }
         }
 
+        private bool _isItemSelected;
+
+        public bool IsItemSelected
+        {
+            get { return _isItemSelected; }
+            set
+            {
+                _isItemSelected = value;
+                OnPropertyChanged(nameof(IsItemSelected));
+            }
+        }
+
+        private string _SelectedText;
+
+        public string SelectedText
+        {
+            get => _SelectedText;
+            set
+            {
+                if (_SelectedText != value)
+                {
+                    _SelectedText = value;
+                    OnPropertyChanged(nameof(SelectedText));
+                }
+            }
+        }
+
+
         // 定义一个私有字段来存储选中的项  
         private string _selectedItem;
 
@@ -60,11 +90,26 @@ namespace WpfApp9
             get { return _selectedItem; } // 获取_selectedItem的值  
             set // 设置_selectedItem的值，并更新Heights和Rows属性  
             {
-                _selectedItem = value; // 更新_selectedItem的值  
+                _selectedItem = value; // 更新_selectedItem的值
+                SelectedText = value;
+                //MessageBox.Show($"当前选中{value}");
+                if (value.Contains("(方案)"))
+                {
+                    Rows = GetRowsForValueByScheme(value); // 设置Rows属性的值  
+                }
+                else
+                {
+                    Rows = GetRowsForValue(value); // 设置Rows属性的值     
+                }
+
                 // 假设GetHeightsForValue和GetRowsForValue是根据选中的项来获取相应值的方法  
                 Heights = GetHeightsForValue(value); // 设置Heights属性的值  
-                Rows = GetRowsForValue(value); // 设置Rows属性的值  
+                //MessageBox.Show($"当前高度{Heights}");
+
+                //MessageBox.Show(Rows.Count.ToString());
                 OnPropertyChanged(nameof(SelectedItem)); // 触发PropertyChanged事件，指明SelectedItem属性已经变更  
+                IsItemSelected = value != null; // 假设null表示没有选中任何项 
+                OnPropertyChanged(nameof(IsItemSelected));
             }
         }
 
@@ -125,6 +170,7 @@ namespace WpfApp9
 
         private string GetHeightsForValue(string value)
         {
+            string _hei = "";
             // 根据选中的项返回对应的层高，这里只是一个示例  
             XmlHandler xmlHandler = new XmlHandler();
             // 创建XmlDocument对象并加载XML内容  
@@ -135,20 +181,71 @@ namespace WpfApp9
             }
             else
             {
-                // 选择要获取的元素，这里使用XPath表达式定位到BuildingHeightLimit元素  
-                XmlNode buildingHeightLimitNode = xmlFile.SelectSingleNode("//BuildingHeightLimit");
-
-                // 检查是否找到了该元素  
-                if (buildingHeightLimitNode != null)
+                // 获取元素的value属性值  
+                try
                 {
-                    // 获取元素的value属性值  
-                    var s = buildingHeightLimitNode.Attributes?["value"].Value;
-                    if (s != null)
-                        value = (double.Parse(s) * 10).ToString(CultureInfo.CurrentCulture);
+                    _hei = XmlHandler.GetBuildingHeightLimit(xmlFile, "BuildingHeightLimit");
+                    //string s = buildingHeightLimitNode.InnerText; 
+                    if (_hei != null)
+                        _hei = (double.Parse(_hei) * 10).ToString(CultureInfo.CurrentCulture);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
                 }
             }
 
-            return value;
+            return _hei;
+        }
+
+        private ObservableCollection<RowModel> GetRowsForValueByScheme(string value)
+        {
+            ObservableCollection<RowModel> res = new ObservableCollection<RowModel>();
+            // 根据选中的项返回对应的层高，这里只是一个示例  
+            XmlHandler xmlHandler = new XmlHandler();
+            // 创建XmlDocument对象并加载XML内容  
+            XmlDocument xmlFile = xmlHandler.ReadXmlFile(value);
+            // 使用XPath查询获取Rows节点  
+            XmlNode rowsNode = xmlFile.SelectSingleNode("//Rows");
+            if (rowsNode != null)
+            {
+                // 使用XPath查询获取Rows节点下的所有Row节点  
+                XmlNodeList rowNodes = rowsNode.SelectNodes("Row");
+                if (rowNodes != null)
+                {
+                    foreach (XmlNode rowNode in rowNodes)
+                    {
+                        // 在这里处理每个Row节点，例如打印Label1和Label2的值  
+                        XmlNode label1Node = rowNode.SelectSingleNode("Label1");
+                        XmlNode label2Node = rowNode.SelectSingleNode("Label2");
+                        XmlNode selectedOption1Node1 =
+                            rowNode.SelectSingleNode("SelectedOption1"); // 添加这行代码来获取SelectedOption1节点  
+                        XmlNode selectedOption1Node2 =
+                            rowNode.SelectSingleNode("SelectedOption2"); // 添加这行代码来获取SelectedOption2节点  
+
+                        if (label1Node != null && label2Node != null && selectedOption1Node1 != null &&
+                            selectedOption1Node2 != null)
+                        {
+                            ObservableCollection<string> dropDownOptions1 = new ObservableCollection<string>();
+                            
+                            ObservableCollection<string> dropDownOptions2 = new ObservableCollection<string>();
+                               
+                            RowModel rowModel = new RowModel(label1Node.InnerText, label2Node.InnerText,
+                                selectedOption1Node1.InnerText, selectedOption1Node2.InnerText,
+                                dropDownOptions1, dropDownOptions2);
+                            res.Add(rowModel);
+                        }
+                    }
+                }
+                else
+                {
+                }
+            }
+            else
+            {
+            }
+
+            return res;
         }
 
         private ObservableCollection<RowModel> GetRowsForValue(string value)
@@ -177,8 +274,13 @@ namespace WpfApp9
                         res.Add(rowModel);
                     }
                 }
+                else
+                {
+                    MessageBox.Show("获取layerNameData为空");
+                }
             }
 
+            //MessageBox.Show(res.Count.ToString());
             return res;
         }
     }
